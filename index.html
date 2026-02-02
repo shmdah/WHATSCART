@@ -2,8 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>WhatsCart - Sell Online with WhatsApp</title>
+    
+    <meta name="theme-color" content="#ecfdf5">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -13,14 +21,34 @@
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
                     colors: {
                         brand: {
-                            50: '#f0fdf4',
-                            100: '#dcfce7',
-                            500: '#22c55e',
-                            600: '#16a34a',
-                            700: '#15803d',
-                            900: '#14532d',
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            900: '#064e3b',
+                            dark: '#022c22'
+                        }
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
                         }
                     }
                 }
@@ -28,277 +56,275 @@
         }
     </script>
     <style>
-        /* Fade in animation for page switching */
-        .fade-in {
-            animation: fadeIn 0.3s ease-in-out;
-        }
+        /* Smooth Fade In */
+        .fade-in { animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(10px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        /* Hide Scrollbar */
+        body::-webkit-scrollbar { width: 0px; background: transparent; }
+        
+        /* Glass Effect Helper */
+        .glass {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .glass-dark {
+            background: rgba(2, 44, 34, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
-<body class="font-sans text-slate-900 bg-white antialiased flex flex-col min-h-screen">
+<body class="font-sans text-slate-800 bg-brand-50 selection:bg-brand-500 selection:text-white antialiased flex flex-col min-h-screen pb-24 md:pb-0 overflow-x-hidden relative">
 
-    <nav class="fixed w-full bg-white/95 backdrop-blur-md z-50 border-b border-slate-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <button onclick="showPage('home')" class="flex items-center gap-2 group">
-                    <div class="bg-brand-600 text-white p-2 rounded-xl group-hover:bg-brand-700 transition">
-                        <i data-lucide="shopping-cart"></i>
+    <div class="fixed inset-0 w-full h-full -z-10 overflow-hidden pointer-events-none">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-brand-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-emerald-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-32 left-1/3 w-96 h-96 bg-teal-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
+    </div>
+
+    <nav class="hidden md:block fixed w-full top-0 z-50 transition-all duration-300">
+        <div class="max-w-6xl mx-auto mt-6">
+            <div class="glass rounded-full px-8 py-4 flex justify-between items-center shadow-lg shadow-brand-900/5">
+                <button onclick="switchTab('home')" class="flex items-center gap-2 group">
+                    <div class="bg-brand-600 text-white p-2 rounded-full group-hover:scale-110 transition duration-300 shadow-md shadow-brand-500/30">
+                        <i data-lucide="shopping-cart" class="w-5 h-5"></i>
                     </div>
-                    <span class="text-2xl font-bold tracking-tight text-slate-900">WhatsCart</span>
+                    <span class="text-xl font-bold tracking-tight text-slate-900">WhatsCart</span>
                 </button>
 
-                <div class="hidden md:flex items-center gap-8">
-                    <button onclick="showPage('features')" class="text-sm font-medium text-slate-600 hover:text-brand-600 transition-colors">Features</button>
-                    <button onclick="showPage('how-it-works')" class="text-sm font-medium text-slate-600 hover:text-brand-600 transition-colors">How it Works</button>
-                    <button onclick="showPage('pricing')" class="text-sm font-medium text-slate-600 hover:text-brand-600 transition-colors">Pricing</button>
-                    <button onclick="showPage('contact')" class="bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-lg hover:shadow-xl">
-                        Get Started
-                    </button>
+                <div class="flex items-center gap-1">
+                    <button onclick="switchTab('features')" class="px-5 py-2 text-sm font-medium text-slate-600 hover:text-brand-700 hover:bg-white/50 rounded-full transition-all">Features</button>
+                    <button onclick="switchTab('how-it-works')" class="px-5 py-2 text-sm font-medium text-slate-600 hover:text-brand-700 hover:bg-white/50 rounded-full transition-all">How it Works</button>
+                    <button onclick="switchTab('pricing')" class="px-5 py-2 text-sm font-medium text-slate-600 hover:text-brand-700 hover:bg-white/50 rounded-full transition-all">Pricing</button>
                 </div>
 
-                <button onclick="toggleMenu()" class="md:hidden text-slate-600 p-2 hover:bg-slate-50 rounded-lg">
-                    <i data-lucide="menu"></i>
+                <button onclick="switchTab('contact')" class="bg-brand-900 hover:bg-brand-700 text-white px-6 py-2.5 rounded-full text-sm font-bold transition-all shadow-lg hover:shadow-brand-900/20 transform hover:-translate-y-0.5">
+                    Get Started
                 </button>
             </div>
         </div>
-
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 absolute w-full px-4 py-4 flex flex-col gap-4 shadow-xl">
-            <button onclick="showPage('home')" class="block text-left font-medium text-slate-600 py-2">Home</button>
-            <button onclick="showPage('features')" class="block text-left font-medium text-slate-600 py-2">Features</button>
-            <button onclick="showPage('how-it-works')" class="block text-left font-medium text-slate-600 py-2">How it Works</button>
-            <button onclick="showPage('pricing')" class="block text-left font-medium text-slate-600 py-2">Pricing</button>
-            <button onclick="showPage('contact')" class="block bg-brand-600 text-white py-3 rounded-lg font-bold text-center w-full">Get Started Now</button>
-        </div>
     </nav>
 
-    <main class="flex-grow pt-20">
+    <div class="md:hidden fixed top-0 w-full z-40 px-4 pt-4">
+        <div class="glass rounded-2xl p-4 flex justify-center items-center shadow-sm">
+            <div class="flex items-center gap-2 text-brand-900" onclick="switchTab('home')">
+                <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                <span class="font-bold text-lg tracking-tight">WhatsCart</span>
+            </div>
+        </div>
+    </div>
+
+    <main class="flex-grow pt-24 md:pt-32">
         
-        <div id="page-home" class="page-section fade-in">
-            <section class="pt-12 pb-20 lg:pt-24 lg:pb-32 overflow-hidden">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <div class="inline-flex items-center gap-2 bg-brand-50 border border-brand-100 px-4 py-2 rounded-full text-brand-700 font-semibold text-sm mb-8">
+        <div id="page-home" class="page-section fade-in px-4">
+            <section class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12 lg:gap-20">
+                
+                <div class="flex-1 text-center md:text-left pt-8 md:pt-0">
+                    <div class="inline-flex items-center gap-2 bg-white/60 border border-white/50 backdrop-blur-sm px-4 py-1.5 rounded-full text-brand-700 font-semibold text-xs mb-8 shadow-sm">
                         <span class="relative flex h-2 w-2">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                         </span>
                         Accept Orders on WhatsApp Instantly
                     </div>
                     
-                    <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 mb-8 leading-tight">
-                        The Easiest Way to Sell <br class="hidden md:block" />
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-emerald-400">Online in Kenya.</span>
+                    <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 mb-6 leading-[1.1]">
+                        Sell Online <br />
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-emerald-400">The Aesthetic Way.</span>
                     </h1>
                     
-                    <p class="text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-                        Build a professional store where customers browse products, build a cart, and send the order directly to your WhatsApp.
+                    <p class="text-lg md:text-xl text-slate-600 mb-10 max-w-lg mx-auto md:mx-0 leading-relaxed font-light">
+                        No clunky checkouts. No complicated forms. Just a beautiful store that sends orders straight to your WhatsApp.
                     </p>
                     
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                        <button onclick="showPage('contact')" class="w-full sm:w-auto px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white rounded-full font-bold text-lg shadow-lg shadow-green-200 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2">
-                            Start Your Store
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start items-center">
+                        <button onclick="switchTab('contact')" class="w-full sm:w-auto px-8 py-4 bg-brand-900 hover:bg-brand-800 text-white rounded-2xl font-bold text-lg shadow-xl shadow-brand-900/20 transition-all active:scale-95 hover:-translate-y-1 flex items-center justify-center gap-2">
+                            Create Store
                         </button>
-                        <button onclick="showPage('how-it-works')" class="w-full sm:w-auto px-8 py-4 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-full font-bold text-lg transition-all flex items-center justify-center gap-2">
-                            See How It Works <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        <button onclick="switchTab('how-it-works')" class="w-full sm:w-auto px-8 py-4 glass text-brand-900 hover:bg-white rounded-2xl font-bold text-lg transition-all active:scale-95 flex items-center justify-center gap-2">
+                            How it Works
                         </button>
                     </div>
                 </div>
-            </section>
 
-            <section class="py-20 bg-slate-50">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="grid md:grid-cols-2 gap-12 items-center">
-                        <div class="order-2 md:order-1">
-                            <div class="bg-white p-8 rounded-3xl shadow-xl border border-slate-100 relative max-w-md mx-auto">
-                                <div class="space-y-4 font-sans">
-                                    <div class="flex w-full">
-                                        <div class="bg-slate-100 p-3 rounded-2xl rounded-tl-none max-w-[80%]">
-                                            <p class="text-sm text-slate-600">Is this shoe available?</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex w-full justify-end">
-                                        <div class="bg-brand-100 p-3 rounded-2xl rounded-tr-none max-w-[80%]">
-                                            <p class="text-sm text-brand-900">Yes! Which size?</p>
-                                        </div>
-                                    </div>
-                                    <div class="my-4 border-t border-slate-200 relative">
-                                        <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-2 text-xs text-slate-400">The WhatsCart Way</span>
-                                    </div>
-                                    <div class="bg-brand-50 border border-brand-200 p-4 rounded-xl">
-                                        <p class="text-xs font-bold text-brand-600 uppercase mb-2">New Order via WhatsCart</p>
-                                        <p class="text-sm font-bold text-slate-900 mb-1">📦 Order #1024</p>
-                                        <p class="text-sm text-slate-700">1x Nike Air Max (Size 42) - KSh 4,500</p>
-                                        <div class="mt-2 pt-2 border-t border-brand-200 flex justify-between items-center">
-                                            <span class="text-sm text-slate-500">Total:</span>
-                                            <span class="text-base font-bold text-brand-700">KSh 4,500</span>
-                                        </div>
+                <div class="flex-1 w-full max-w-md md:max-w-full relative">
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-brand-200 to-transparent rounded-full opacity-50 blur-3xl -z-10"></div>
+                    
+                    <div class="glass rounded-3xl p-6 shadow-2xl shadow-brand-900/10 border border-white/60 animate-float">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-gray-100 to-gray-200"></div>
+                                <div>
+                                    <div class="h-3 w-24 bg-gray-200 rounded-full mb-1"></div>
+                                    <div class="h-2 w-16 bg-gray-100 rounded-full"></div>
+                                </div>
+                            </div>
+                            <div class="w-8 h-8 rounded-full bg-brand-50 flex items-center justify-center text-brand-600">
+                                <i data-lucide="message-circle" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-3 font-sans text-sm">
+                            <div class="bg-white/50 p-3 rounded-2xl rounded-tl-none self-start max-w-[80%] shadow-sm">
+                                <p class="text-slate-600">Do you have these in Black?</p>
+                            </div>
+                            <div class="bg-brand-500 text-white p-3 rounded-2xl rounded-tr-none ml-auto max-w-[80%] shadow-md shadow-brand-500/20">
+                                <p>Yes! Here is your order link 👇</p>
+                            </div>
+                            
+                            <div class="bg-white p-3 rounded-2xl border border-brand-100 shadow-sm ml-auto max-w-[90%] mt-2">
+                                <div class="flex gap-3">
+                                    <div class="w-12 h-12 bg-gray-100 rounded-lg shrink-0"></div>
+                                    <div>
+                                        <p class="font-bold text-slate-800 text-xs">Nike Air Max</p>
+                                        <p class="text-[10px] text-slate-500">Size 42 • Black</p>
+                                        <p class="font-bold text-brand-600 text-sm mt-1">KSh 4,500</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="order-1 md:order-2">
-                            <h2 class="text-3xl font-bold mb-6 text-slate-900">Stop losing sales to "DM for Price"</h2>
-                            <p class="text-lg text-slate-600 mb-6">
-                                Traditional websites are too hard for customers. Instagram DMs are too messy for you. WhatsCart fixes both.
-                            </p>
-                            <button onclick="showPage('pricing')" class="text-brand-600 font-bold hover:underline flex items-center gap-1">
-                                Check our pricing <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                            </button>
-                        </div>
                     </div>
                 </div>
             </section>
         </div>
 
-        <div id="page-how-it-works" class="page-section hidden fade-in">
-            <section class="py-24 bg-white">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="text-center mb-16">
-                        <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">How It Works</h2>
-                        <p class="text-lg text-slate-600">A seamless experience for you and your customers.</p>
+        <div id="page-features" class="page-section hidden fade-in px-4">
+            <section class="max-w-6xl mx-auto py-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-brand-dark">Why it's better.</h2>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="glass p-6 rounded-3xl hover:-translate-y-2 transition-transform duration-300">
+                        <div class="w-12 h-12 bg-yellow-100 rounded-2xl flex items-center justify-center text-yellow-600 mb-4 text-xl">⚡</div>
+                        <h3 class="font-bold text-lg mb-2">Blazing Fast</h3>
+                        <p class="text-sm text-slate-500 leading-relaxed">Loads instantly. No heavy code to slow down your customers.</p>
                     </div>
+                    
+                    <div class="glass p-6 rounded-3xl hover:-translate-y-2 transition-transform duration-300">
+                        <div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 mb-4 text-xl">📱</div>
+                        <h3 class="font-bold text-lg mb-2">Mobile First</h3>
+                        <p class="text-sm text-slate-500 leading-relaxed">Designed for thumbs. Perfect for Instagram & TikTok bios.</p>
+                    </div>
+                    
+                    <div class="glass p-6 rounded-3xl hover:-translate-y-2 transition-transform duration-300">
+                        <div class="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center text-green-600 mb-4 text-xl">🔒</div>
+                        <h3 class="font-bold text-lg mb-2">Zero Risk</h3>
+                        <p class="text-sm text-slate-500 leading-relaxed">Payments happen on M-Pesa/Cash. No hacks, no holds.</p>
+                    </div>
+                    
+                    <div class="glass p-6 rounded-3xl hover:-translate-y-2 transition-transform duration-300">
+                        <div class="w-12 h-12 bg-purple-100 rounded-2xl flex items-center justify-center text-purple-600 mb-4 text-xl">🎨</div>
+                        <h3 class="font-bold text-lg mb-2">Aesthetic</h3>
+                        <p class="text-sm text-slate-500 leading-relaxed">Clean, minimal design that makes your brand look expensive.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
 
-                    <div class="grid md:grid-cols-3 gap-8">
-                        <div class="bg-white p-8 rounded-2xl border border-slate-100 hover:border-brand-200 shadow-lg transition-all">
-                            <div class="bg-brand-50 w-16 h-16 rounded-2xl flex items-center justify-center text-brand-600 mb-6">
-                                <i data-lucide="smartphone" class="w-8 h-8"></i>
-                            </div>
-                            <h3 class="text-xl font-bold mb-3">1. Customer Browses</h3>
-                            <p class="text-slate-600">Your customer visits your professional link and adds products to their cart easily.</p>
-                        </div>
-                        <div class="bg-white p-8 rounded-2xl border border-slate-100 hover:border-brand-200 shadow-lg transition-all">
-                            <div class="bg-brand-50 w-16 h-16 rounded-2xl flex items-center justify-center text-brand-600 mb-6">
-                                <i data-lucide="shopping-cart" class="w-8 h-8"></i>
-                            </div>
-                            <h3 class="text-xl font-bold mb-3">2. Hits Checkout</h3>
-                            <p class="text-slate-600">No forms to fill. They simply click 'Order on WhatsApp' to proceed.</p>
-                        </div>
-                        <div class="bg-white p-8 rounded-2xl border border-slate-100 hover:border-brand-200 shadow-lg transition-all">
-                            <div class="bg-brand-50 w-16 h-16 rounded-2xl flex items-center justify-center text-brand-600 mb-6">
-                                <i data-lucide="message-circle" class="w-8 h-8"></i>
-                            </div>
-                            <h3 class="text-xl font-bold mb-3">3. You Get the Order</h3>
-                            <p class="text-slate-600">You receive a pre-filled WhatsApp message with items, total price, and details.</p>
+        <div id="page-how-it-works" class="page-section hidden fade-in px-4">
+            <section class="max-w-4xl mx-auto py-8">
+                <h2 class="text-3xl font-bold text-brand-dark text-center mb-12">Simple as 1, 2, 3.</h2>
+                
+                <div class="space-y-6">
+                    <div class="glass p-8 rounded-3xl flex items-center gap-6 group hover:bg-white/80 transition">
+                        <span class="text-6xl font-black text-brand-100 group-hover:text-brand-200 transition">1</span>
+                        <div>
+                            <h3 class="text-xl font-bold text-brand-900">Share your Link</h3>
+                            <p class="text-slate-500">Post your professional store link on your bio or status.</p>
                         </div>
                     </div>
                     
-                    <div class="mt-16 text-center">
-                         <button onclick="showPage('contact')" class="bg-slate-900 text-white px-8 py-3 rounded-full font-bold hover:bg-slate-800 transition">Get Started Now</button>
+                    <div class="glass p-8 rounded-3xl flex items-center gap-6 group hover:bg-white/80 transition">
+                        <span class="text-6xl font-black text-brand-100 group-hover:text-brand-200 transition">2</span>
+                        <div>
+                            <h3 class="text-xl font-bold text-brand-900">Customer Shops</h3>
+                            <p class="text-slate-500">They browse and add to cart without creating an account.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="glass p-8 rounded-3xl flex items-center gap-6 group hover:bg-white/80 transition">
+                        <span class="text-6xl font-black text-brand-100 group-hover:text-brand-200 transition">3</span>
+                        <div>
+                            <h3 class="text-xl font-bold text-brand-900">You get the WhatsApp</h3>
+                            <p class="text-slate-500">"New Order: 1x Shoes, 1x Watch. Total: 5k." Instant.</p>
+                        </div>
                     </div>
                 </div>
             </section>
         </div>
 
-        <div id="page-pricing" class="page-section hidden fade-in">
-            <section class="py-24 bg-slate-900 text-white min-h-[80vh] flex items-center">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                    <div class="text-center mb-16">
-                        <h2 class="text-3xl md:text-4xl font-bold mb-4">Simple, Transparent Pricing</h2>
-                        <p class="text-xl text-slate-400">Professional store setup with no hidden costs.</p>
-                    </div>
-
-                    <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
-                        <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700 relative overflow-hidden">
-                            <div class="absolute top-0 right-0 bg-brand-500 text-xs font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider text-white">
-                                Standard
+        <div id="page-pricing" class="page-section hidden fade-in px-4">
+            <section class="max-w-5xl mx-auto py-8 flex flex-col items-center">
+                <h2 class="text-3xl font-bold text-brand-dark text-center mb-4">Investment</h2>
+                <p class="text-slate-500 mb-12 text-center">Transparent pricing for serious businesses.</p>
+                
+                <div class="grid md:grid-cols-2 gap-8 w-full">
+                    <div class="glass-dark p-8 rounded-[2rem] text-white relative overflow-hidden transform hover:-translate-y-2 transition-transform duration-500">
+                        <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-brand-800 to-transparent opacity-50"></div>
+                        <div class="relative z-10">
+                            <div class="inline-block bg-brand-500/20 border border-brand-400/30 text-brand-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-6">
+                                Everything Included
                             </div>
-                            <h3 class="text-2xl font-bold text-white mb-2">Store Setup</h3>
+                            <h3 class="text-2xl font-bold mb-2">Store Launch</h3>
                             <div class="flex items-baseline gap-1 mb-6">
-                                <span class="text-4xl font-bold">KSh 20,000</span>
-                                <span class="text-slate-400">/one-time</span>
+                                <span class="text-5xl font-extrabold tracking-tight">KSh 20k</span>
                             </div>
-                            <p class="text-slate-300 mb-8 border-b border-slate-700 pb-8">
-                                Complete professional design and build.
+                            <p class="text-brand-100/80 mb-8 pb-8 border-b border-white/10">
+                                We build, design, and launch your store. You just start selling.
                             </p>
-                            <ul class="space-y-4 mb-8">
-                                <li class="flex items-center gap-3 text-slate-300"><i data-lucide="check-circle-2" class="text-brand-400 w-5 h-5"></i> <strong>First 60 Days Included</strong></li>
-                                <li class="flex items-center gap-3 text-slate-300"><i data-lucide="check-circle-2" class="text-brand-400 w-5 h-5"></i> Professional Design</li>
-                                <li class="flex items-center gap-3 text-slate-300"><i data-lucide="check-circle-2" class="text-brand-400 w-5 h-5"></i> WhatsApp Integration</li>
-                                <li class="flex items-center gap-3 text-slate-300"><i data-lucide="check-circle-2" class="text-brand-400 w-5 h-5"></i> Free Domain Connection</li>
+                            <ul class="space-y-4 mb-8 text-sm text-brand-50">
+                                <li class="flex items-center gap-3"><div class="bg-brand-500 rounded-full p-1"><i data-lucide="check" class="w-3 h-3 text-white"></i></div> First 60 Days Free</li>
+                                <li class="flex items-center gap-3"><div class="bg-brand-500 rounded-full p-1"><i data-lucide="check" class="w-3 h-3 text-white"></i></div> Premium Design</li>
+                                <li class="flex items-center gap-3"><div class="bg-brand-500 rounded-full p-1"><i data-lucide="check" class="w-3 h-3 text-white"></i></div> Domain Connection</li>
                             </ul>
-                            <button onclick="showPage('contact')" class="block w-full text-center bg-white text-slate-900 font-bold py-4 rounded-xl hover:bg-brand-50 transition-colors">
-                                Get Started
+                            <button onclick="switchTab('contact')" class="w-full bg-white text-brand-900 font-bold py-4 rounded-xl hover:bg-brand-50 transition-colors">
+                                Start Now
                             </button>
                         </div>
+                    </div>
 
-                        <div class="bg-transparent p-8 rounded-3xl border border-slate-700">
-                            <h3 class="text-2xl font-bold text-white mb-2">Monthly Support</h3>
-                            <div class="flex items-baseline gap-1 mb-6">
-                                <span class="text-4xl font-bold">KSh 10,000</span>
-                                <span class="text-slate-400">/month</span>
-                            </div>
-                            <p class="text-slate-400 mb-8 border-b border-slate-700 pb-8">
-                                Charged starting Month 3 (after your initial 60 days).
-                            </p>
-                            <ul class="space-y-4 mb-8">
-                                <li class="flex items-center gap-3 text-slate-300"><i data-lucide="check-circle-2" class="text-slate-500 w-5 h-5"></i> Unlimited Products</li>
-                                <li class="flex items-center gap-3 text-slate-300"><i data-lucide="check-circle-2" class="text-slate-500 w-5 h-5"></i> 24/7 Technical Support</li>
-                                <li class="flex items-center gap-3 text-slate-300"><i data-lucide="check-circle-2" class="text-slate-500 w-5 h-5"></i> Hosting Included</li>
-                                <li class="flex items-center gap-3 text-slate-300"><i data-lucide="check-circle-2" class="text-slate-500 w-5 h-5"></i> Cancel Anytime</li>
-                            </ul>
+                    <div class="glass p-8 rounded-[2rem] relative flex flex-col justify-center">
+                        <h3 class="text-2xl font-bold text-brand-900 mb-2">Monthly Hosting</h3>
+                        <div class="flex items-baseline gap-1 mb-6">
+                            <span class="text-4xl font-bold text-slate-800">KSh 10k</span>
+                            <span class="text-slate-400">/mo</span>
                         </div>
+                        <p class="text-slate-500 mb-8">
+                            Starts after your 60-day trial ends. Keeps your store online and fast.
+                        </p>
+                        <ul class="space-y-4 mb-8 text-sm text-slate-600">
+                            <li class="flex items-center gap-3"><i data-lucide="server" class="w-5 h-5 text-slate-400"></i> 24/7 Server Uptime</li>
+                            <li class="flex items-center gap-3"><i data-lucide="life-buoy" class="w-5 h-5 text-slate-400"></i> Technical Support</li>
+                            <li class="flex items-center gap-3"><i data-lucide="refresh-cw" class="w-5 h-5 text-slate-400"></i> Regular Updates</li>
+                        </ul>
                     </div>
                 </div>
             </section>
         </div>
 
-        <div id="page-features" class="page-section hidden fade-in">
-            <section class="py-24 bg-white">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-12 text-center">Why choose WhatsCart?</h2>
-                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100">
-                            <div class="mb-4 bg-white w-12 h-12 rounded-lg flex items-center justify-center shadow-sm text-yellow-500">
-                                <i data-lucide="zap"></i>
-                            </div>
-                            <h4 class="font-bold text-lg mb-2">Super Fast</h4>
-                            <p class="text-sm text-slate-600">Optimized for speed. Your store loads instantly even on mobile data.</p>
-                        </div>
-                        <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100">
-                            <div class="mb-4 bg-white w-12 h-12 rounded-lg flex items-center justify-center shadow-sm text-blue-500">
-                                <i data-lucide="smartphone"></i>
-                            </div>
-                            <h4 class="font-bold text-lg mb-2">Mobile First</h4>
-                            <p class="text-sm text-slate-600">Designed specifically for the screens your customers use most.</p>
-                        </div>
-                        <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100">
-                            <div class="mb-4 bg-white w-12 h-12 rounded-lg flex items-center justify-center shadow-sm text-brand-500">
-                                <i data-lucide="shield-check"></i>
-                            </div>
-                            <h4 class="font-bold text-lg mb-2">Secure</h4>
-                            <p class="text-sm text-slate-600">No payments processed on site means zero fraud risk for you.</p>
-                        </div>
-                        <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100">
-                            <div class="mb-4 bg-white w-12 h-12 rounded-lg flex items-center justify-center shadow-sm text-purple-500">
-                                <i data-lucide="shopping-cart"></i>
-                            </div>
-                            <h4 class="font-bold text-lg mb-2">Easy Mgmt</h4>
-                            <p class="text-sm text-slate-600">Simple dashboard to manage your stock and prices.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <div id="page-contact" class="page-section hidden fade-in">
-            <section class="py-24 bg-brand-600 text-white min-h-[80vh] flex flex-col justify-center">
-                <div class="max-w-4xl mx-auto px-4 text-center">
-                    <h2 class="text-3xl md:text-5xl font-bold mb-6">Ready to upgrade your business?</h2>
-                    <p className="text-xl text-brand-100 mb-10">
-                        Let's get your store running today. Send us a message on WhatsApp to start the setup process.
+        <div id="page-contact" class="page-section hidden fade-in px-4">
+            <section class="max-w-4xl mx-auto py-12 flex flex-col items-center text-center min-h-[60vh] justify-center">
+                <div class="glass p-12 rounded-[3rem] shadow-2xl shadow-brand-900/10 border border-white/60">
+                    <h2 class="text-4xl md:text-5xl font-extrabold text-brand-900 mb-6">Let's Build It.</h2>
+                    <p class="text-lg text-slate-600 mb-10 max-w-md mx-auto">
+                        Ready to upgrade? Chat with us on WhatsApp to begin your store setup.
                     </p>
-                    <a href="https://wa.me/254700000000" target="_blank" class="inline-flex items-center gap-2 bg-white text-brand-700 font-bold py-4 px-8 rounded-full text-lg hover:bg-brand-50 transition-transform hover:scale-105 shadow-xl">
+                    
+                    <a href="https://wa.me/254700000000" target="_blank" class="w-full md:w-auto inline-flex items-center justify-center gap-3 bg-brand-600 text-white font-bold py-5 px-10 rounded-2xl text-lg hover:bg-brand-500 transition-all hover:scale-105 shadow-xl shadow-brand-500/30">
                         <i data-lucide="message-circle" class="w-6 h-6"></i>
-                        Chat with Us on WhatsApp
+                        Open WhatsApp
                     </a>
-                    <p className="mt-8 text-sm text-brand-200 opacity-80">
-                        Or call us at <span class="font-bold text-white">+254 700 000 000</span>
-                    </p>
                     
-                    <button onclick="showPage('home')" class="mt-12 text-sm text-brand-100 hover:text-white underline">
-                        Back to Home
+                    <button onclick="switchTab('home')" class="block mx-auto mt-8 text-sm text-slate-400 hover:text-brand-600 font-medium transition-colors">
+                        Maybe later
                     </button>
                 </div>
             </section>
@@ -306,47 +332,61 @@
 
     </main>
 
-    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="flex items-center gap-2">
-                <i data-lucide="shopping-cart" class="text-brand-500"></i>
-                <span class="font-bold text-white text-lg">WhatsCart</span>
+    <footer class="hidden md:block mt-auto py-12 border-t border-brand-900/5 bg-white/30 backdrop-blur-sm">
+        <div class="max-w-6xl mx-auto px-4 flex justify-between items-center text-slate-400 text-sm">
+            <div class="flex items-center gap-2 text-brand-900 opacity-50">
+                <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+                <span class="font-bold">WhatsCart</span>
             </div>
-            <p class="text-sm">© 2025 - 2026 WhatsCart Kenya. All rights reserved.</p>
+            <p>&copy; 2025 - 2026 WhatsCart Kenya</p>
         </div>
     </footer>
 
+    <div class="md:hidden fixed bottom-6 left-4 right-4 z-50">
+        <div class="glass-dark rounded-2xl p-2 flex justify-around items-center shadow-2xl shadow-brand-900/20 backdrop-blur-xl">
+            <button onclick="switchTab('home')" class="nav-btn p-3 rounded-xl transition-all" data-target="home">
+                <i data-lucide="home" class="w-6 h-6 text-brand-100"></i>
+            </button>
+            <button onclick="switchTab('features')" class="nav-btn p-3 rounded-xl transition-all" data-target="features">
+                <i data-lucide="layers" class="w-6 h-6 text-brand-500/50"></i>
+            </button>
+            <button onclick="switchTab('pricing')" class="nav-btn p-3 rounded-xl transition-all" data-target="pricing">
+                <i data-lucide="credit-card" class="w-6 h-6 text-brand-500/50"></i>
+            </button>
+            <button onclick="switchTab('contact')" class="nav-btn p-3 rounded-xl bg-brand-500 shadow-lg shadow-brand-500/30" data-target="contact">
+                <i data-lucide="user" class="w-6 h-6 text-white"></i>
+            </button>
+        </div>
+    </div>
+
     <script>
-        // Initialize Icons
         lucide.createIcons();
 
-        // 1. Logic to Switch Pages
-        function showPage(pageId) {
+        function switchTab(tabId) {
             // Hide all pages
-            const pages = document.querySelectorAll('.page-section');
-            pages.forEach(page => {
-                page.classList.add('hidden');
+            document.querySelectorAll('.page-section').forEach(el => el.classList.add('hidden'));
+            
+            // Show target
+            const target = document.getElementById('page-' + tabId);
+            if(target) target.classList.remove('hidden');
+
+            // Mobile Nav Visual State
+            document.querySelectorAll('.nav-btn i').forEach(icon => {
+                // Reset standard icons to dim
+                if(!icon.parentElement.classList.contains('bg-brand-500')) {
+                    icon.classList.remove('text-brand-100');
+                    icon.classList.add('text-brand-500/50');
+                }
             });
 
-            // Show selected page
-            const target = document.getElementById('page-' + pageId);
-            if (target) {
-                target.classList.remove('hidden');
-                // Re-initialize icons just in case
-                lucide.createIcons();
+            // Highlight active icon
+            const activeBtn = document.querySelector(`.nav-btn[data-target="${tabId}"] i`);
+            if(activeBtn && !activeBtn.parentElement.classList.contains('bg-brand-500')) {
+                activeBtn.classList.remove('text-brand-500/50');
+                activeBtn.classList.add('text-brand-100');
             }
 
-            // Scroll to top
-            window.scrollTo(0,0);
-
-            // Close mobile menu if open
-            document.getElementById('mobile-menu').classList.add('hidden');
-        }
-
-        // 2. Logic to Toggle Mobile Menu
-        function toggleMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 </body>
