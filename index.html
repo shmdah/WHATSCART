@@ -38,6 +38,8 @@
                     animation: {
                         'blob': 'blob 7s infinite',
                         'float': 'float 6s ease-in-out infinite',
+                        'marquee': 'marquee 25s linear infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
                         blob: {
@@ -48,7 +50,11 @@
                         },
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' }, /* Reduced float height for mobile */
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-100%)' },
                         }
                     }
                 }
@@ -56,21 +62,26 @@
         }
     </script>
     <style>
-        .fade-in { animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px) scale(0.98); }
+            from { opacity: 0; transform: translateY(10px) scale(0.99); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
         
-        /* Hide Scrollbar */
         body::-webkit-scrollbar { width: 0px; background: transparent; }
         
-        /* Glass Effect */
+        /* Glass Styles */
         .glass {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
         }
         .glass-dark {
             background: rgba(2, 44, 34, 0.85);
@@ -83,21 +94,21 @@
 <body class="font-sans text-slate-800 bg-brand-50 antialiased flex flex-col min-h-screen pb-20 md:pb-0 overflow-x-hidden relative">
 
     <div class="fixed inset-0 w-full h-full -z-10 overflow-hidden pointer-events-none">
-        <div class="absolute top-0 left-1/4 w-64 h-64 md:w-96 md:h-96 bg-brand-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
-        <div class="absolute top-0 right-1/4 w-64 h-64 md:w-96 md:h-96 bg-emerald-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
-        <div class="absolute -bottom-32 left-1/3 w-64 h-64 md:w-96 md:h-96 bg-teal-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
+        <div class="absolute top-0 left-1/4 w-72 h-72 md:w-96 md:h-96 bg-brand-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+        <div class="absolute top-0 right-1/4 w-72 h-72 md:w-96 md:h-96 bg-emerald-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-32 left-1/3 w-72 h-72 md:w-96 md:h-96 bg-teal-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
     </div>
 
     <nav class="hidden md:block fixed w-full top-0 z-50 transition-all duration-300">
         <div class="max-w-6xl mx-auto mt-6">
-            <div class="glass rounded-full px-8 py-4 flex justify-between items-center shadow-lg shadow-brand-900/5">
+            <div class="glass rounded-full px-8 py-3 flex justify-between items-center shadow-lg shadow-brand-900/5">
                 <button onclick="switchTab('home')" class="flex items-center gap-2 group">
                     <div class="bg-brand-600 text-white p-2 rounded-full group-hover:scale-110 transition duration-300">
                         <i data-lucide="shopping-cart" class="w-5 h-5"></i>
                     </div>
                     <span class="text-xl font-bold tracking-tight text-slate-900">WhatsCart</span>
                 </button>
-                <div class="flex items-center gap-1">
+                <div class="flex items-center gap-2">
                     <button onclick="switchTab('features')" class="px-5 py-2 text-sm font-medium text-slate-600 hover:text-brand-700 hover:bg-white/50 rounded-full transition-all">Features</button>
                     <button onclick="switchTab('how-it-works')" class="px-5 py-2 text-sm font-medium text-slate-600 hover:text-brand-700 hover:bg-white/50 rounded-full transition-all">How it Works</button>
                     <button onclick="switchTab('pricing')" class="px-5 py-2 text-sm font-medium text-slate-600 hover:text-brand-700 hover:bg-white/50 rounded-full transition-all">Pricing</button>
@@ -112,17 +123,16 @@
     <div class="md:hidden fixed top-0 w-full z-40 px-4 pt-2">
         <div class="glass rounded-xl p-3 flex justify-center items-center shadow-sm">
             <div class="flex items-center gap-2 text-brand-900" onclick="switchTab('home')">
-                <i data-lucide="shopping-cart" class="w-4 h-4"></i>
-                <span class="font-bold text-base tracking-tight">WhatsCart</span>
+                <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                <span class="font-bold text-lg tracking-tight">WhatsCart</span>
             </div>
         </div>
     </div>
 
     <main class="flex-grow pt-20 md:pt-32">
         
-        <div id="page-home" class="page-section fade-in px-4">
-            <section class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-8 lg:gap-20">
-                
+        <div id="page-home" class="page-section fade-in">
+            <section class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center gap-8 lg:gap-20 mb-12">
                 <div class="flex-1 text-center md:text-left pt-4 md:pt-0">
                     <div class="inline-flex items-center gap-2 bg-white/60 border border-white/50 backdrop-blur-sm px-3 py-1 rounded-full text-brand-700 font-semibold text-[10px] uppercase tracking-wide mb-6 shadow-sm">
                         <span class="relative flex h-2 w-2">
@@ -142,87 +152,112 @@
                     </p>
                     
                     <div class="flex flex-col sm:flex-row gap-3 justify-center md:justify-start items-center">
-                        <button onclick="switchTab('contact')" class="w-full sm:w-auto px-6 py-3 bg-brand-900 hover:bg-brand-800 text-white rounded-xl font-bold text-base shadow-xl shadow-brand-900/20 transition-all active:scale-95 flex items-center justify-center gap-2">
+                        <button onclick="switchTab('contact')" class="w-full sm:w-auto px-6 py-4 bg-brand-900 hover:bg-brand-800 text-white rounded-2xl font-bold text-base shadow-xl shadow-brand-900/20 transition-all active:scale-95 flex items-center justify-center gap-2 animate-pulse-slow">
                             Create Store
                         </button>
-                        <button onclick="switchTab('how-it-works')" class="w-full sm:w-auto px-6 py-3 glass text-brand-900 hover:bg-white rounded-xl font-bold text-base transition-all active:scale-95 flex items-center justify-center gap-2">
+                        <button onclick="switchTab('how-it-works')" class="w-full sm:w-auto px-6 py-4 glass text-brand-900 hover:bg-white rounded-2xl font-bold text-base transition-all active:scale-95 flex items-center justify-center gap-2">
                             How it Works
                         </button>
                     </div>
                 </div>
 
                 <div class="flex-1 w-full max-w-sm md:max-w-full relative mt-4 md:mt-0">
-                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-brand-200 to-transparent rounded-full opacity-50 blur-3xl -z-10"></div>
-                    
-                    <div class="glass rounded-2xl p-4 md:p-6 shadow-2xl shadow-brand-900/10 border border-white/60 animate-float">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-gray-100 to-gray-200"></div>
+                    <div class="glass-card rounded-3xl p-5 shadow-2xl animate-float relative z-10">
+                        <div class="flex justify-between items-center mb-4 border-b border-gray-100 pb-3">
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-red-400"></div>
+                                <div class="w-2 h-2 rounded-full bg-yellow-400"></div>
+                                <div class="w-2 h-2 rounded-full bg-green-400"></div>
+                            </div>
+                            <span class="text-[10px] text-gray-400">whatscart.store/yours</span>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex gap-3 items-center bg-gray-50 p-2 rounded-xl">
+                                <div class="w-12 h-12 bg-gray-200 rounded-lg"></div>
                                 <div>
-                                    <div class="h-2.5 w-20 bg-gray-200 rounded-full mb-1"></div>
-                                    <div class="h-1.5 w-12 bg-gray-100 rounded-full"></div>
+                                    <div class="h-2 w-24 bg-gray-300 rounded mb-1"></div>
+                                    <div class="h-2 w-16 bg-gray-200 rounded"></div>
                                 </div>
+                                <button class="ml-auto bg-brand-500 text-white px-3 py-1 rounded-lg text-xs">Add</button>
                             </div>
-                            <div class="w-6 h-6 rounded-full bg-brand-50 flex items-center justify-center text-brand-600">
-                                <i data-lucide="message-circle" class="w-3 h-3"></i>
+                             <div class="flex gap-3 items-center bg-gray-50 p-2 rounded-xl">
+                                <div class="w-12 h-12 bg-gray-200 rounded-lg"></div>
+                                <div>
+                                    <div class="h-2 w-20 bg-gray-300 rounded mb-1"></div>
+                                    <div class="h-2 w-12 bg-gray-200 rounded"></div>
+                                </div>
+                                <button class="ml-auto bg-brand-500 text-white px-3 py-1 rounded-lg text-xs">Add</button>
                             </div>
                         </div>
-                        
-                        <div class="space-y-2 font-sans text-xs md:text-sm">
-                            <div class="bg-white/50 p-2.5 rounded-2xl rounded-tl-none self-start max-w-[80%] shadow-sm">
-                                <p class="text-slate-600">Do you have these in Black?</p>
-                            </div>
-                            <div class="bg-brand-500 text-white p-2.5 rounded-2xl rounded-tr-none ml-auto max-w-[80%] shadow-md shadow-brand-500/20">
-                                <p>Yes! Here is your order link 👇</p>
-                            </div>
-                            <div class="bg-white p-2.5 rounded-2xl border border-brand-100 shadow-sm ml-auto max-w-[90%] mt-1">
-                                <div class="flex gap-3">
-                                    <div class="w-10 h-10 bg-gray-100 rounded-lg shrink-0"></div>
-                                    <div>
-                                        <p class="font-bold text-slate-800 text-[10px] md:text-xs">Nike Air Max</p>
-                                        <p class="text-[9px] md:text-[10px] text-slate-500">Size 42 • Black</p>
-                                        <p class="font-bold text-brand-600 text-xs mt-0.5">KSh 4,500</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
+                    <div class="absolute -bottom-4 -right-4 w-full h-full bg-brand-200 rounded-3xl -z-10 opacity-50 transform rotate-3"></div>
+                </div>
+            </section>
+
+            <section class="bg-brand-900 py-3 overflow-hidden rotate-1 scale-105 mb-12 shadow-inner">
+                <div class="whitespace-nowrap animate-marquee flex gap-8 items-center text-brand-100/80 font-bold text-xs md:text-sm uppercase tracking-widest">
+                    <span>⚡ Instant Setup</span> • <span>📱 Mobile First</span> • <span>🔒 Secure Orders</span> • <span>💎 Premium Design</span> • <span>🚀 No Coding</span> • 
+                    <span>⚡ Instant Setup</span> • <span>📱 Mobile First</span> • <span>🔒 Secure Orders</span> • <span>💎 Premium Design</span> • <span>🚀 No Coding</span> •
+                    <span>⚡ Instant Setup</span> • <span>📱 Mobile First</span> • <span>🔒 Secure Orders</span> • <span>💎 Premium Design</span> • <span>🚀 No Coding</span>
+                </div>
+            </section>
+
+            <section class="px-4 pb-8">
+                <h3 class="text-center font-bold text-brand-900 mb-6 text-lg">Perfect For</h3>
+                <div class="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory no-scrollbar">
+                    <div class="snap-center shrink-0 w-36 h-32 glass-card rounded-2xl flex flex-col items-center justify-center gap-2 p-4 text-center">
+                        <span class="text-2xl">👟</span>
+                        <span class="text-sm font-bold text-slate-700">Fashion</span>
+                    </div>
+                    <div class="snap-center shrink-0 w-36 h-32 glass-card rounded-2xl flex flex-col items-center justify-center gap-2 p-4 text-center">
+                        <span class="text-2xl">🍔</span>
+                        <span class="text-sm font-bold text-slate-700">Food</span>
+                    </div>
+                    <div class="snap-center shrink-0 w-36 h-32 glass-card rounded-2xl flex flex-col items-center justify-center gap-2 p-4 text-center">
+                        <span class="text-2xl">💄</span>
+                        <span class="text-sm font-bold text-slate-700">Beauty</span>
+                    </div>
+                    <div class="snap-center shrink-0 w-36 h-32 glass-card rounded-2xl flex flex-col items-center justify-center gap-2 p-4 text-center">
+                        <span class="text-2xl">🎧</span>
+                        <span class="text-sm font-bold text-slate-700">Gadgets</span>
                     </div>
                 </div>
             </section>
         </div>
 
         <div id="page-features" class="page-section hidden fade-in px-4">
-            <section class="max-w-6xl mx-auto py-4">
+            <div class="max-w-6xl mx-auto py-4">
+                <button onclick="switchTab('home')" class="flex items-center gap-2 text-sm text-slate-500 hover:text-brand-600 mb-6 transition-colors">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Home
+                </button>
+
                 <div class="text-center mb-8">
                     <h2 class="text-2xl font-bold text-brand-dark">Why it's better.</h2>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div class="glass p-5 rounded-2xl flex md:block items-center gap-4">
+                    <div class="glass-card p-5 rounded-2xl flex md:block items-center gap-4">
                         <div class="w-10 h-10 bg-yellow-100 rounded-xl flex items-center justify-center text-yellow-600 mb-0 md:mb-3 text-lg">⚡</div>
                         <div>
                             <h3 class="font-bold text-base md:text-lg">Blazing Fast</h3>
                             <p class="text-xs md:text-sm text-slate-500 mt-1">Loads instantly.</p>
                         </div>
                     </div>
-                    
-                    <div class="glass p-5 rounded-2xl flex md:block items-center gap-4">
+                    <div class="glass-card p-5 rounded-2xl flex md:block items-center gap-4">
                         <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-0 md:mb-3 text-lg">📱</div>
                         <div>
                             <h3 class="font-bold text-base md:text-lg">Mobile First</h3>
                             <p class="text-xs md:text-sm text-slate-500 mt-1">Designed for thumbs.</p>
                         </div>
                     </div>
-                    
-                    <div class="glass p-5 rounded-2xl flex md:block items-center gap-4">
+                    <div class="glass-card p-5 rounded-2xl flex md:block items-center gap-4">
                         <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center text-green-600 mb-0 md:mb-3 text-lg">🔒</div>
                         <div>
                             <h3 class="font-bold text-base md:text-lg">Zero Risk</h3>
                             <p class="text-xs md:text-sm text-slate-500 mt-1">No payment hacks.</p>
                         </div>
                     </div>
-                    
-                    <div class="glass p-5 rounded-2xl flex md:block items-center gap-4">
+                    <div class="glass-card p-5 rounded-2xl flex md:block items-center gap-4">
                         <div class="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600 mb-0 md:mb-3 text-lg">🎨</div>
                         <div>
                             <h3 class="font-bold text-base md:text-lg">Aesthetic</h3>
@@ -230,31 +265,33 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
         </div>
 
         <div id="page-how-it-works" class="page-section hidden fade-in px-4">
-            <section class="max-w-4xl mx-auto py-4">
+            <div class="max-w-4xl mx-auto py-4">
+                <button onclick="switchTab('home')" class="flex items-center gap-2 text-sm text-slate-500 hover:text-brand-600 mb-6 transition-colors">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Home
+                </button>
+
                 <h2 class="text-2xl font-bold text-brand-dark text-center mb-8">Simple as 1, 2, 3.</h2>
                 
                 <div class="space-y-4">
-                    <div class="glass p-6 rounded-2xl flex items-center gap-4 md:gap-6">
+                    <div class="glass-card p-6 rounded-2xl flex items-center gap-4 md:gap-6">
                         <span class="text-4xl md:text-6xl font-black text-brand-100">1</span>
                         <div>
                             <h3 class="text-lg md:text-xl font-bold text-brand-900">Share your Link</h3>
                             <p class="text-xs md:text-sm text-slate-500">Post your professional store link.</p>
                         </div>
                     </div>
-                    
-                    <div class="glass p-6 rounded-2xl flex items-center gap-4 md:gap-6">
+                    <div class="glass-card p-6 rounded-2xl flex items-center gap-4 md:gap-6">
                         <span class="text-4xl md:text-6xl font-black text-brand-100">2</span>
                         <div>
                             <h3 class="text-lg md:text-xl font-bold text-brand-900">Customer Shops</h3>
                             <p class="text-xs md:text-sm text-slate-500">They browse and add to cart easily.</p>
                         </div>
                     </div>
-                    
-                    <div class="glass p-6 rounded-2xl flex items-center gap-4 md:gap-6">
+                    <div class="glass-card p-6 rounded-2xl flex items-center gap-4 md:gap-6">
                         <span class="text-4xl md:text-6xl font-black text-brand-100">3</span>
                         <div>
                             <h3 class="text-lg md:text-xl font-bold text-brand-900">You get the Order</h3>
@@ -262,11 +299,15 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
         </div>
 
         <div id="page-pricing" class="page-section hidden fade-in px-4">
-            <section class="max-w-5xl mx-auto py-4 flex flex-col items-center">
+            <div class="max-w-5xl mx-auto py-4 flex flex-col items-center">
+                <button onclick="switchTab('home')" class="flex items-center gap-2 text-sm text-slate-500 hover:text-brand-600 mb-6 self-start transition-colors">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Home
+                </button>
+
                 <h2 class="text-2xl font-bold text-brand-dark text-center mb-2">Investment</h2>
                 <p class="text-sm text-slate-500 mb-8 text-center">Transparent pricing.</p>
                 
@@ -292,7 +333,7 @@
                         </div>
                     </div>
 
-                    <div class="glass p-6 rounded-[1.5rem] relative flex flex-col justify-center">
+                    <div class="glass-card p-6 rounded-[1.5rem] relative flex flex-col justify-center">
                         <h3 class="text-lg font-bold text-brand-900 mb-1">Monthly Hosting</h3>
                         <div class="flex items-baseline gap-1 mb-4">
                             <span class="text-3xl font-bold text-slate-800">KSh 10k</span>
@@ -307,12 +348,16 @@
                         </ul>
                     </div>
                 </div>
-            </section>
+            </div>
         </div>
 
         <div id="page-contact" class="page-section hidden fade-in px-4">
-            <section class="max-w-4xl mx-auto py-8 flex flex-col items-center text-center min-h-[50vh] justify-center">
-                <div class="glass p-8 md:p-12 rounded-[2rem] shadow-xl border border-white/60 w-full">
+            <div class="max-w-4xl mx-auto py-8 flex flex-col items-center text-center min-h-[50vh] justify-center">
+                <button onclick="switchTab('home')" class="flex items-center gap-2 text-sm text-slate-500 hover:text-brand-600 mb-6 self-start md:self-center transition-colors">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Home
+                </button>
+
+                <div class="glass-card p-8 md:p-12 rounded-[2rem] shadow-xl border border-white/60 w-full">
                     <h2 class="text-3xl md:text-5xl font-extrabold text-brand-900 mb-4">Let's Build It.</h2>
                     <p class="text-sm md:text-lg text-slate-600 mb-8 max-w-md mx-auto">
                         Ready to upgrade? Chat with us on WhatsApp to begin.
@@ -323,7 +368,7 @@
                         Open WhatsApp
                     </a>
                 </div>
-            </section>
+            </div>
         </div>
 
     </main>
