@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsCart - Sell Online with WhatsApp</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            900: '#14532d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Fade in animation for page switching */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-900 bg-white antialiased flex flex-col min-h-screen">
+
+    <nav class="fixed w-full bg-white/95 backdrop-blur-md z-50 border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <button onclick="showPage('home')" class="flex items-center gap-2 group">
+                    <div class="bg-brand-600 text-white p-2 rounded-xl group-hover:bg-brand-700 transition">
+                        <i data-lucide="shopping-cart"></i>
+                    </div>
+                    <span class="text-2xl font-bold tracking-tight text-slate-900">WhatsCart</span>
+                </button>
+
+                <div class="hidden md:flex items-center gap-8">
+                    <button onclick="showPage('features')" class="text-sm font-medium text-slate-600 hover:text-brand-600 transition-colors">Features</button>
+                    <button onclick="showPage('how-it-works')" class="text-sm font-medium text-slate-600 hover:text-brand-600 transition-colors">How it Works</button>
+                    <button onclick="showPage('pricing')" class="text-sm font-medium text-slate-600 hover:text-brand-600 transition-colors">Pricing</button>
+                    <button onclick="showPage('contact')" class="bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-lg hover:shadow-xl">
+                        Get Started
+                    </button>
+                </div>
+
+                <button onclick="toggleMenu()" class="md:hidden text-slate-600 p-2 hover:bg-slate-50 rounded-lg">
+                    <i data-lucide="menu"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 absolute w-full px-4 py-4 flex flex-col gap-4 shadow-xl">
+            <button onclick="showPage('home')" class="block text-left font-medium text-slate-600 py-2">Home</button>
+            <button onclick="showPage('features')" class="block text-left font-medium text-slate-600 py-2">Features</button>
+            <button onclick="showPage('how-it-works')" class="block text-left font-medium text-slate-600 py-2">How it Works</button>
+            <button onclick="showPage('pricing')" class="block text-left font-medium text-slate-600 py-2">Pricing</button>
+            <button onclick="showPage('contact')" class="block bg-brand-600 text-white py-3 rounded-lg font-bold text-center w-full">Get Started Now</button>
+        </div>
+    </nav>
+
+    <main class="flex-grow pt-20">
+        
+        <div id="page-home" class="page-section fade-in">
+            <section class="pt-12 pb-20 lg:pt-24 lg:pb-32 overflow-hidden">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <div class="inline-flex items-center gap-2 bg-brand-50 border border-brand-100 px-4 py-2 rounded-full text-brand-700 font-semibold text-sm mb-8">
+                        <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                        </span>
+                        Accept Orders on WhatsApp Instantly
+                    </div>
+                    
+                    <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 mb-8 leading-tight">
+                        The Easiest Way to Sell <br class="hidden md:block" />
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-emerald-400">Online in Kenya.</span>
+                    </h1>
+                    
+                    <p class="text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+                        Build a professional store where customers browse products, build a cart, and send the order directly to your WhatsApp.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                        <button onclick="showPage('contact')" class="w-full sm:w-auto px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white rounded-full font-bold text-lg shadow-lg shadow-green-200 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                            Start Your Store
+                        </button>
+                        <button onclick="showPage('how-it-works')" class="w-full sm:w-auto px-8 py-4 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-full font-bold text-lg transition-all flex items-center justify-center gap-2">
+                            See How It Works <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-20 bg-slate-50">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        <div class="order-2 md:order-1">
+                            <div class="bg-white p-8 rounded-3xl shadow-xl border border-slate-100 relative max-w-md mx-auto">
+                                <div class="space-y-4 font-sans">
+                                    <div class="flex w-full">
+                                        <div class="bg-slate-100 p-3 rounded-2xl rounded-tl-none max-w-[80%]">
+                                            <p class="text-sm text-slate-600">Is this shoe available?</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex w-full justify-end">
+                                        <div class="bg-brand-100 p-3 rounded-2xl rounded-tr-none max-w-[80%]">
+                                            <p class="text-sm text-brand-900">Yes! Which size?</p>
+                                        </div>
+                                    </div>
+                                    <div class="my-4 border-t border-slate-200 relative">
+                                        <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-2 text-xs text-slate-400">The WhatsCart Way</span>
+                                    </div>
+                                    <div class="bg-brand-50 border border-brand-200 p-4 rounded-xl">
+                                        <p class="text-xs font-bold text-brand-600 uppercase mb-2">New Order via WhatsCart</p>
+                                        <p class="text-sm font-bold text-slate-900 mb-1">📦 Order #1024</p>
+                                        <p class="text-sm text-slate-700">1x Nike Air Max (Size 42) - KSh 4,500</p>
+                                        <div class="mt-2 pt-2 border-t border-brand-200 flex justify-between items-center">
+                                            <span class="text-sm text-slate-500">Total:</span>
+                                            <span class="text-base font-bold text-brand-700">KSh 4,500</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order-1 md:order-2">
+                            <h2 class="text-3xl font-bold mb-6 text-slate-900">Stop losing sales to "DM for Price"</h2>
+                            <p class="text-lg text-slate-600 mb-6">
+                                Traditional websites are too hard for customers. Instagram DMs are too messy for you. WhatsCart fixes both.
+                            </p>
+                            <button onclick="showPage('pricing')" class="text-brand-600 font-bold hover:underline flex items-center gap-1">
+                                Check our pricing <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="page-how-it-works" class="page-section hidden fade-in">
+            <section class="py-24 bg-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">How It Works</h2>
+                        <p class="text-lg text-slate-600">A seamless experience for you and your customers.</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="bg-white p-8 rounded-2xl border border-slate-100 hover:border-brand-200 shadow-lg transition-all">
+                            <div class="bg-brand-50 w-16 h-16 rounded-2xl flex items-center justify-center text-brand-600 mb-6">
+                                <i data-lucide="smartphone" class="w-8 h-8"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">1. Customer Browses</h3>
+                            <p class="text-slate-600">Your customer visits your professional link and adds products to their cart easily.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-2xl border border-slate-100 hover:border-brand-200 shadow-lg transition-all">
+                            <div class="bg-brand-50 w-16 h-16 rounded-2xl flex items-center justify-center text-brand-600 mb-6">
+                                <i data-lucide="shopping-cart" class="w-8 h-8"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">2. Hits Checkout</h3>
+                            <p class="text-slate-600">No forms to fill. They simply click 'Order on WhatsApp' to proceed.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-2xl border border-slate-100 hover:border-brand-200 shadow-lg transition-all">
+                            <div class="bg-brand-50 w-16 h-16 rounded-2xl flex items-center justify-center text-brand-600 mb-6">
+                                <i data-lucide="message-circle" class="w-8 h-8"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">3. You Get the Order</h3>
+                            <p class="text-slate-600">You receive a pre-filled WhatsApp message with items, total price, and details.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-16 text-center">
+                         <button onclick="showPage('contact')" class="bg-slate-900 text-white px-8 py-3 rounded-full font-bold hover:bg-slate-800 transition">Get Started Now</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="page-pricing" class="page-section hidden fade-in">
+            <section class="py-24 bg-slate-900 text-white min-h-[80vh] flex items-center">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4">Simple, Transparent Pricing</h2>
+                        <p class="text-xl text-slate-400">Professional store setup with no hidden costs.</p>
+                    </div>
+
+                    <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+                        <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700 relative overflow-hidden">
+                            <div class="absolute top-0 right-0 bg-brand-500 text-xs font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider text-white">
+                                Standard
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Store Setup</h3>
+                            <div class="flex items-baseline gap-1 mb-6">
+                                <span class="text-4xl font-bold">KSh 20,000</span>
+                                <span class="text-slate-400">/one-time</span>
+                            </div>
+                            <p class="text-slate-300 mb-8 border-b border-slate-700 pb-8">
+                                Complete professional design and build.
+                            </p>
+                            <ul class="space-y-4 mb-8">
+                                <li class="flex items-center gap-3 text-slate-300"><i data-lucide="check-circle-2" class="text-brand-400 w-5 h-5"></i> <strong>First 60 Days Included</strong></li>
+                                <li class="flex items-center gap-3 text-slate-300"><i data-lucide="check-circle-2" class="text-brand-400 w-5 h-5"></i> Professional Design</li>
+                                <li class="flex items-center gap-3 text-slate-300"><i data-lucide="check-circle-2" class="text-brand-400 w-5 h-5"></i> WhatsApp Integration</li>
+                                <li class="flex items-center gap-3 text-slate-300"><i data-lucide="check-circle-2" class="text-brand-400 w-5 h-5"></i> Free Domain Connection</li>
+                            </ul>
+                            <button onclick="showPage('contact')" class="block w-full text-center bg-white text-slate-900 font-bold py-4 rounded-xl hover:bg-brand-50 transition-colors">
+                                Get Started
+                            </button>
+                        </div>
+
+                        <div class="bg-transparent p-8 rounded-3xl border border-slate-700">
+                            <h3 class="text-2xl font-bold text-white mb-2">Monthly Support</h3>
+                            <div class="flex items-baseline gap-1 mb-6">
+                                <span class="text-4xl font-bold">KSh 10,000</span>
+                                <span class="text-slate-400">/month</span>
+                            </div>
+                            <p class="text-slate-400 mb-8 border-b border-slate-700 pb-8">
+                                Charged starting Month 3 (after your initial 60 days).
+                            </p>
+                            <ul class="space-y-4 mb-8">
+                                <li class="flex items-center gap-3 text-slate-300"><i data-lucide="check-circle-2" class="text-slate-500 w-5 h-5"></i> Unlimited Products</li>
+                                <li class="flex items-center gap-3 text-slate-300"><i data-lucide="check-circle-2" class="text-slate-500 w-5 h-5"></i> 24/7 Technical Support</li>
+                                <li class="flex items-center gap-3 text-slate-300"><i data-lucide="check-circle-2" class="text-slate-500 w-5 h-5"></i> Hosting Included</li>
+                                <li class="flex items-center gap-3 text-slate-300"><i data-lucide="check-circle-2" class="text-slate-500 w-5 h-5"></i> Cancel Anytime</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="page-features" class="page-section hidden fade-in">
+            <section class="py-24 bg-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-12 text-center">Why choose WhatsCart?</h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100">
+                            <div class="mb-4 bg-white w-12 h-12 rounded-lg flex items-center justify-center shadow-sm text-yellow-500">
+                                <i data-lucide="zap"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2">Super Fast</h4>
+                            <p class="text-sm text-slate-600">Optimized for speed. Your store loads instantly even on mobile data.</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100">
+                            <div class="mb-4 bg-white w-12 h-12 rounded-lg flex items-center justify-center shadow-sm text-blue-500">
+                                <i data-lucide="smartphone"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2">Mobile First</h4>
+                            <p class="text-sm text-slate-600">Designed specifically for the screens your customers use most.</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100">
+                            <div class="mb-4 bg-white w-12 h-12 rounded-lg flex items-center justify-center shadow-sm text-brand-500">
+                                <i data-lucide="shield-check"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2">Secure</h4>
+                            <p class="text-sm text-slate-600">No payments processed on site means zero fraud risk for you.</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100">
+                            <div class="mb-4 bg-white w-12 h-12 rounded-lg flex items-center justify-center shadow-sm text-purple-500">
+                                <i data-lucide="shopping-cart"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2">Easy Mgmt</h4>
+                            <p class="text-sm text-slate-600">Simple dashboard to manage your stock and prices.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="page-contact" class="page-section hidden fade-in">
+            <section class="py-24 bg-brand-600 text-white min-h-[80vh] flex flex-col justify-center">
+                <div class="max-w-4xl mx-auto px-4 text-center">
+                    <h2 class="text-3xl md:text-5xl font-bold mb-6">Ready to upgrade your business?</h2>
+                    <p className="text-xl text-brand-100 mb-10">
+                        Let's get your store running today. Send us a message on WhatsApp to start the setup process.
+                    </p>
+                    <a href="https://wa.me/254700000000" target="_blank" class="inline-flex items-center gap-2 bg-white text-brand-700 font-bold py-4 px-8 rounded-full text-lg hover:bg-brand-50 transition-transform hover:scale-105 shadow-xl">
+                        <i data-lucide="message-circle" class="w-6 h-6"></i>
+                        Chat with Us on WhatsApp
+                    </a>
+                    <p className="mt-8 text-sm text-brand-200 opacity-80">
+                        Or call us at <span class="font-bold text-white">+254 700 000 000</span>
+                    </p>
+                    
+                    <button onclick="showPage('home')" class="mt-12 text-sm text-brand-100 hover:text-white underline">
+                        Back to Home
+                    </button>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <i data-lucide="shopping-cart" class="text-brand-500"></i>
+                <span class="font-bold text-white text-lg">WhatsCart</span>
+            </div>
+            <p class="text-sm">© 2025 - 2026 WhatsCart Kenya. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // 1. Logic to Switch Pages
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page-section');
+            pages.forEach(page => {
+                page.classList.add('hidden');
+            });
+
+            // Show selected page
+            const target = document.getElementById('page-' + pageId);
+            if (target) {
+                target.classList.remove('hidden');
+                // Re-initialize icons just in case
+                lucide.createIcons();
+            }
+
+            // Scroll to top
+            window.scrollTo(0,0);
+
+            // Close mobile menu if open
+            document.getElementById('mobile-menu').classList.add('hidden');
+        }
+
+        // 2. Logic to Toggle Mobile Menu
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
