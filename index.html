@@ -82,7 +82,6 @@
         
         body::-webkit-scrollbar { width: 0px; background: transparent; }
         
-        /* Glass & Utils */
         .glass-nav { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.05); }
         .dark .glass-nav { background: rgba(2, 6, 23, 0.7); border-bottom: 1px solid rgba(255,255,255,0.05); }
 
@@ -147,10 +146,10 @@
             font-weight: 300;
             letter-spacing: 1px;
             text-align: center;
-            animation: textFade 0.8s ease-out 0.4s both; /* Delayed fade in */
+            animation: textFade 0.8s ease-out 0.4s both;
         }
 
-        /* --- HONEY FOOTER STYLES (Exact Match) --- */
+        /* --- HONEY FOOTER STYLES --- */
         .wc-brand-footer {
             width: 100%;
             display: flex;
@@ -206,7 +205,7 @@
             else { html.classList.add('dark'); localStorage.setItem('theme', 'dark'); }
         }
 
-        /* === INSPIRATIONAL LOADER EXIT (2.5 Seconds) === */
+        /* === INSPIRATIONAL LOADER EXIT === */
         window.addEventListener('load', () => {
             setTimeout(() => {
                 document.getElementById('honey-loader').classList.add('hide');
@@ -470,31 +469,32 @@
         </div>
 
         <div id="page-pricing" class="page-section hidden fade-in px-4 md:px-0">
-            <section class="max-w-5xl mx-auto py-8 md:py-20 flex flex-col items-center px-6">
-                <button onclick="switchTab('home')" class="flex items-center gap-2 text-sm text-alien-deep dark:text-alien-light hover:underline mb-10 self-start font-bold"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Home</button>
-                <h2 class="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white text-center mb-6">Investment</h2>
-                <p class="text-sm md:text-lg text-slate-500 dark:text-slate-400 mb-16 text-center">Zero risk. We grow when you grow.</p>
-                <div class="grid md:grid-cols-2 gap-8 w-full">
-                    <div class="glass-card bg-slate-900 dark:bg-slate-900 p-8 md:p-10 rounded-3xl text-white relative overflow-hidden group hover:border-alien-glow dark:hover:border-alien-glow/50 transition-all">
-                        <div class="absolute top-0 right-0 p-8 opacity-20 group-hover:opacity-40 transition-opacity"><i data-lucide="gift" class="w-32 h-32 text-alien-glow"></i></div>
+            <section class="max-w-5xl mx-auto py-4 md:py-20 flex flex-col items-center px-4 md:px-6">
+                <button onclick="switchTab('home')" class="flex items-center gap-2 text-sm text-alien-deep dark:text-alien-light hover:underline mb-6 md:mb-10 self-start font-bold"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Home</button>
+                <h2 class="text-2xl md:text-5xl font-bold text-slate-900 dark:text-white text-center mb-4 md:mb-6">Investment</h2>
+                <p class="text-xs md:text-lg text-slate-500 dark:text-slate-400 mb-8 md:mb-16 text-center">Zero risk. We grow when you grow.</p>
+                
+                <div class="grid md:grid-cols-2 gap-5 md:gap-8 w-full">
+                    <div class="glass-card bg-slate-900 dark:bg-slate-900 p-6 md:p-10 rounded-3xl text-white relative overflow-hidden group hover:border-alien-glow dark:hover:border-alien-glow/50 transition-all">
+                        <div class="absolute top-0 right-0 p-6 md:p-8 opacity-20 group-hover:opacity-40 transition-opacity"><i data-lucide="gift" class="w-24 h-24 md:w-32 md:h-32 text-alien-glow"></i></div>
                         <div class="relative z-10">
-                            <div class="inline-block bg-alien-glow/20 border border-alien-glow/30 text-alien-light text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4">Limited Offer</div>
-                            <h3 class="text-2xl font-bold mb-2">Store Setup</h3>
-                            <div class="flex items-baseline gap-2 mb-6"><span class="text-5xl font-extrabold tracking-tight text-white">Free</span><span class="text-slate-400 line-through text-lg">KSh 20k</span></div>
-                            <ul class="space-y-4 mb-8 text-sm text-slate-200">
-                                <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-alien-glow"></i> <strong>Zero Upfront Cost</strong></li>
-                                <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-alien-glow"></i> We Upload Your Products</li>
+                            <div class="inline-block bg-alien-glow/20 border border-alien-glow/30 text-alien-light text-[10px] md:text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4">Limited Offer</div>
+                            <h3 class="text-xl md:text-2xl font-bold mb-2">Store Setup</h3>
+                            <div class="flex items-baseline gap-2 mb-4 md:mb-6"><span class="text-4xl md:text-5xl font-extrabold tracking-tight text-white">Free</span><span class="text-slate-400 line-through text-sm md:text-lg">KSh 20k</span></div>
+                            <ul class="space-y-3 md:space-y-4 mb-6 md:mb-8 text-xs md:text-sm text-slate-200">
+                                <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 md:w-5 md:h-5 text-alien-glow"></i> <strong>Zero Upfront Cost</strong></li>
+                                <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 md:w-5 md:h-5 text-alien-glow"></i> We Upload Your Products</li>
                             </ul>
-                            <button onclick="switchTab('contact')" class="w-full bg-alien-glow text-white dark:text-dark-950 font-bold py-4 rounded-xl hover:bg-white hover:text-slate-900 transition-colors">Claim Free Setup</button>
+                            <button onclick="switchTab('contact')" class="w-full bg-alien-glow text-white dark:text-dark-950 font-bold py-3 md:py-4 rounded-xl hover:bg-white hover:text-slate-900 transition-colors text-sm md:text-base">Claim Free Setup</button>
                         </div>
                     </div>
-                    <div class="glass-card p-8 md:p-10 rounded-3xl relative flex flex-col justify-center border-slate-200 dark:border-white/5">
-                        <div class="absolute top-0 right-0 p-8"><span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Hosting</span></div>
-                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Monthly Hosting</h3>
-                        <div class="flex items-baseline gap-2 mb-6"><span class="text-4xl font-bold text-slate-900 dark:text-white">KSh 10k</span><span class="text-slate-500 dark:text-slate-400 text-lg">/mo</span></div>
-                        <ul class="space-y-4 mb-8 text-sm text-slate-600 dark:text-slate-400">
-                            <li class="flex items-center gap-3"><i data-lucide="server" class="w-5 h-5 text-slate-400 dark:text-slate-500"></i> 99.9% Server Uptime</li>
-                            <li class="flex items-center gap-3"><i data-lucide="life-buoy" class="w-5 h-5 text-slate-400 dark:text-slate-500"></i> 24/7 Technical Support</li>
+                    <div class="glass-card p-6 md:p-10 rounded-3xl relative flex flex-col justify-center border-slate-200 dark:border-white/5">
+                        <div class="absolute top-0 right-0 p-6 md:p-8"><span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest">Hosting</span></div>
+                        <h3 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-2">Monthly Hosting</h3>
+                        <div class="flex items-baseline gap-2 mb-4 md:mb-6"><span class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">KSh 10k</span><span class="text-slate-500 dark:text-slate-400 text-sm md:text-lg">/mo</span></div>
+                        <ul class="space-y-3 md:space-y-4 mb-6 md:mb-8 text-xs md:text-sm text-slate-600 dark:text-slate-400">
+                            <li class="flex items-center gap-3"><i data-lucide="server" class="w-4 h-4 md:w-5 md:h-5 text-slate-400 dark:text-slate-500"></i> 99.9% Server Uptime</li>
+                            <li class="flex items-center gap-3"><i data-lucide="life-buoy" class="w-4 h-4 md:w-5 md:h-5 text-slate-400 dark:text-slate-500"></i> 24/7 Technical Support</li>
                         </ul>
                     </div>
                 </div>
@@ -502,14 +502,14 @@
         </div>
 
         <div id="page-contact" class="page-section hidden fade-in px-4 md:px-0">
-            <section class="max-w-4xl mx-auto py-12 md:py-32 flex flex-col items-center text-center min-h-[60vh] justify-center px-6">
-                <button onclick="switchTab('home')" class="flex items-center gap-2 text-sm text-alien-deep dark:text-alien-light hover:underline mb-10 self-center font-bold"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Home</button>
-                <div class="glass-card bg-white dark:bg-transparent p-10 md:p-16 rounded-[2.5rem] shadow-2xl border border-slate-100 dark:border-alien-glow/20 w-full relative overflow-hidden">
+            <section class="max-w-4xl mx-auto py-6 md:py-32 flex flex-col items-center text-center min-h-[50vh] justify-center px-4 md:px-6">
+                <button onclick="switchTab('home')" class="flex items-center gap-2 text-sm text-alien-deep dark:text-alien-light hover:underline mb-6 md:mb-10 self-center font-bold"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Home</button>
+                <div class="glass-card bg-white dark:bg-transparent p-6 md:p-16 rounded-[2rem] md:rounded-[2.5rem] shadow-2xl border border-slate-100 dark:border-alien-glow/20 w-full relative overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-b from-alien-light/30 to-transparent dark:from-alien-glow/10 dark:to-transparent"></div>
-                    <h2 class="text-3xl md:text-6xl font-extrabold text-slate-900 dark:text-white mb-6 relative z-10">Let's Build It.</h2>
-                    <p class="text-base md:text-xl text-slate-500 dark:text-slate-400 mb-10 max-w-md mx-auto relative z-10">Ready to upgrade your business? Chat with us on WhatsApp to begin setup.</p>
-                    <a href="https://wa.me/254700000000" target="_blank" class="w-full md:w-auto inline-flex items-center justify-center gap-3 bg-alien-glow dark:bg-alien-light text-white dark:text-dark-950 font-bold py-4 px-12 rounded-xl text-lg hover:bg-alien-deep dark:hover:bg-white transition-all hover:scale-105 shadow-xl relative z-10">
-                        <i data-lucide="message-circle" class="w-6 h-6"></i> Open WhatsApp
+                    <h2 class="text-3xl md:text-6xl font-extrabold text-slate-900 dark:text-white mb-4 md:mb-6 relative z-10">Let's Build It.</h2>
+                    <p class="text-sm md:text-xl text-slate-500 dark:text-slate-400 mb-8 md:mb-10 max-w-md mx-auto relative z-10">Ready to upgrade your business? Chat with us on WhatsApp to begin setup.</p>
+                    <a href="https://wa.me/254700000000" target="_blank" class="w-auto inline-flex items-center justify-center gap-2 bg-alien-glow dark:bg-alien-light text-white dark:text-dark-950 font-bold py-3 px-8 md:py-5 md:px-12 rounded-xl text-sm md:text-xl hover:bg-alien-deep dark:hover:bg-white transition-all hover:scale-105 shadow-xl relative z-10">
+                        <i data-lucide="message-circle" class="w-5 h-5 md:w-6 md:h-6"></i> Open WhatsApp
                     </a>
                 </div>
             </section>
