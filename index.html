@@ -11,7 +11,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@400;600;700;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -34,9 +34,7 @@
                     animation: {
                         'alien': 'alienMove 15s ease-in-out infinite alternate', 
                         'marquee': 'marquee 40s linear infinite', 
-                        'breathe-card': 'breatheCard 6s ease-in-out infinite',
                         'pulse-glow': 'pulseGlow 3s infinite',
-                        'float': 'float 6s ease-in-out infinite',
                         'intro-pop': 'introPop 0.45s cubic-bezier(0.16,1,0.3,1) both'
                     },
                     keyframes: {
@@ -45,17 +43,9 @@
                             '50%': { transform: 'translate(30px, -30px) scale(1.3)', opacity: '0.6' }, 
                             '100%': { transform: 'translate(-20px, 20px) scale(1)', opacity: '0.4' }, 
                         },
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
-                        },
                         marquee: {
                             '0%': { transform: 'translateX(0%)' },
                             '100%': { transform: 'translateX(-100%)' },
-                        },
-                        breatheCard: {
-                            '0%, 100%': { transform: 'scale(1)', boxShadow: '0 0 0 rgba(0,0,0,0)' },
-                            '50%': { transform: 'scale(1.02)', boxShadow: '0 20px 60px -10px rgba(34, 197, 94, 0.15)' } 
                         },
                         pulseGlow: {
                             '0%, 100%': { boxShadow: '0 0 20px -5px rgba(132, 204, 22, 0.3)' },
@@ -77,114 +67,39 @@
         
         body::-webkit-scrollbar { width: 0px; background: transparent; }
         
-        /* --- GLASSMORPHISM ADAPTIVE --- */
-        /* Light Mode Glass */
+        /* GLASSMORPHISM */
         .glass-nav { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.1); }
-        .glass-card { 
-            background: rgba(255, 255, 255, 0.85); /* Whiter background for Light Mode */
-            backdrop-filter: blur(20px); 
-            border: 1px solid rgba(0, 0, 0, 0.08); /* Darker border for contrast */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); 
-        }
-        
-        /* Dark Mode Glass Overrides */
+        .glass-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); }
         .dark .glass-nav { background: rgba(2, 6, 23, 0.7); border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .dark .glass-card { 
-            background: rgba(15, 23, 42, 0.4); 
-            border: 1px solid rgba(255, 255, 255, 0.05); 
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); 
-        }
+        .dark .glass-card { background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); }
 
-        .glass-icon {
-            background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.5)); /* Lighter icon bg for Light Mode */
-            border: 1px solid rgba(0,0,0,0.05);
-            backdrop-filter: blur(12px);
-            box-shadow: 0 4px 20px rgba(34, 197, 94, 0.15);
-        }
-        .dark .glass-icon {
-            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
-            border: 1px solid rgba(255,255,255,0.1);
-        }
+        .glass-icon { background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.5)); border: 1px solid rgba(0,0,0,0.05); backdrop-filter: blur(12px); box-shadow: 0 4px 20px rgba(34, 197, 94, 0.15); }
+        .dark .glass-icon { background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.1); }
 
         .text-glow { text-shadow: 0 0 50px rgba(34, 197, 94, 0.5); }
+        .transform-gpu { transform: translateZ(0); }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .transform-gpu { transform: translateZ(0); }
 
-        /* ================= MICRO INTRO LOADER ================= */
-        #honey-loader {
-            position: fixed;
-            inset: 0;
-            background: #020617;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-        }
+        /* MICRO LOADER */
+        #honey-loader { position: fixed; inset: 0; background: #020617; z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.4s ease, visibility 0.4s ease; }
+        #honey-loader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loader-icon { width: 64px; height: 64px; border-radius: 18px; background: linear-gradient(135deg, #22c55e, #15803d); display: flex; align-items: center; justify-content: center; color: #020617; font-size: 26px; box-shadow: 0 0 40px rgba(34,197,94,0.5); animation: introPop 0.45s cubic-bezier(0.16,1,0.3,1); }
 
-        #honey-loader.hide {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
+        /* PRICING GLOW */
+        .pro-glow { box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.3), 0 0 20px -2px rgba(34, 197, 94, 0.25), 0 10px 20px -5px rgba(0,0,0,0.5); }
 
-        .loader-icon {
-            width: 64px;
-            height: 64px;
-            border-radius: 18px;
-            background: linear-gradient(135deg, #22c55e, #15803d);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #020617;
-            font-size: 26px;
-            box-shadow: 0 0 40px rgba(34,197,94,0.5);
-            animation: introPop 0.45s cubic-bezier(0.16,1,0.3,1);
-        }
-
-        /* --- HONEY FOOTER STYLES --- */
-        .wc-brand-footer {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 30px 0;
-            opacity: 0.8; /* Increased opacity for visibility */
-            transition: opacity 0.3s ease;
-        }
+        /* FOOTER */
+        .wc-brand-footer { width: 100%; display: flex; justify-content: center; align-items: center; padding: 30px 0; opacity: 0.8; transition: opacity 0.3s ease; }
         .wc-brand-footer:hover { opacity: 1; }
-        
-        .wc-brand-link {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        
-        .wc-brand-text {
-            font-family: 'Poppins', sans-serif;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: rgba(0,0,0,0.6); /* Darker text for light mode */
-            font-weight: 700;
-        }
-        .dark .wc-brand-text { color: rgba(255,255,255,0.5); } /* White text for dark mode */
-        
-        .wc-brand-icon {
-            width: 22px;
-            height: 22px;
-            background: linear-gradient(135deg, #22c55e, #15803d);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #000;
-            font-size: 10px;
-            box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
-        }
+        .wc-brand-link { display: flex; align-items: center; gap: 8px; text-decoration: none; cursor: pointer; }
+        .wc-brand-text { font-family: 'Poppins', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: rgba(0,0,0,0.6); font-weight: 700; }
+        .dark .wc-brand-text { color: rgba(255,255,255,0.5); }
+        .wc-brand-icon { width: 22px; height: 22px; background: linear-gradient(135deg, #22c55e, #15803d); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #000; font-size: 10px; box-shadow: 0 0 10px rgba(34, 197, 94, 0.3); }
+
+        /* STUDENT ANIMATION */
+        .unlock-reveal { animation: slideInRight 0.5s ease-out forwards; }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
     </style>
     
     <script>
@@ -199,7 +114,6 @@
             else { html.classList.add('dark'); localStorage.setItem('theme', 'dark'); }
         }
 
-        /* === MICRO INTRO EXIT === */
         window.addEventListener('load', () => {
             requestAnimationFrame(() => {
                 setTimeout(() => {
@@ -209,7 +123,7 @@
         });
     </script>
 </head>
-<body class="font-sans bg-slate-50 dark:bg-dark-950 text-slate-900 dark:text-slate-300 antialiased flex flex-col min-h-screen pb-24 md:pb-0 overflow-x-hidden relative selection:bg-alien-glow selection:text-white transition-colors duration-500">
+<body class="font-sans bg-slate-50 dark:bg-dark-950 text-slate-900 dark:text-slate-300 antialiased flex flex-col min-h-screen pb-24 md:pb-0 overflow-x-hidden relative selection:bg-alien-glow selection:text-white transition-colors duration-500" id="main-body">
 
     <div id="honey-loader">
         <div class="loader-icon">
@@ -236,6 +150,7 @@
                     <button onclick="switchTab('features')" class="px-6 py-2.5 text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-all hover:text-alien-glow">Features</button>
                     <button onclick="switchTab('how-it-works')" class="px-6 py-2.5 text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-all hover:text-alien-glow">How it Works</button>
                     <button onclick="switchTab('pricing')" class="px-6 py-2.5 text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-all hover:text-alien-glow">Pricing</button>
+                    <button onclick="switchTab('faq')" class="px-6 py-2.5 text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-all hover:text-alien-glow">FAQ</button>
                 </div>
                 <div class="flex items-center gap-4">
                     <button onclick="toggleTheme()" class="p-3 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 transition-colors">
@@ -276,12 +191,12 @@
                         System Online
                     </div>
                     
-                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-6 leading-[1.1]">
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-6 leading-[1.1]">
                         Sell Online <br />
                         <span class="text-transparent bg-clip-text bg-gradient-to-r from-alien-light via-alien-glow to-emerald-400 text-glow">The Aesthetic Way.</span>
                     </h1>
                     
-                    <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-lg md:max-w-xl mx-auto md:mx-0 leading-relaxed font-light">
+                    <p class="text-base md:text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-lg md:max-w-xl mx-auto md:mx-0 leading-relaxed font-light">
                         Turn your WhatsApp into a checkout machine. No websites to manage. No login required. Just pure sales.
                     </p>
                     
@@ -297,7 +212,6 @@
 
                 <div class="flex-1 w-full max-w-sm md:max-w-md relative mt-8 md:mt-0 perspective-1000">
                     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-gradient-to-tr from-alien-light/20 to-alien-glow/20 rounded-full opacity-60 blur-[80px] -z-10 animate-pulse-glow transform-gpu"></div>
-                    
                     <div class="glass-card rounded-[2.5rem] p-6 md:p-8 shadow-2xl border-t border-white/50 dark:border-alien-glow/30 animate-float relative z-10 bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl transform transition-transform hover:scale-[1.02] duration-500">
                         <div class="flex items-center justify-between mb-6 md:mb-8 border-b border-slate-200 dark:border-white/5 pb-4 md:pb-6">
                             <div class="flex items-center gap-4">
@@ -406,32 +320,28 @@
                 </div>
                 <div class="grid md:grid-cols-2 gap-6">
                     <div class="glass-card p-8 rounded-3xl relative overflow-hidden group hover:-translate-y-2 transition-all duration-300 hover:shadow-2xl hover:shadow-alien-glow/10 border border-white/5 hover:border-alien-glow/30">
-                        <div class="absolute -right-10 -top-10 w-32 h-32 bg-alien-glow/10 rounded-full blur-2xl group-hover:bg-alien-glow/20 transition-all"></div>
-                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-alien-light/10 to-alien-glow/10 flex items-center justify-center mb-6 border border-alien-glow/20 group-hover:scale-110 transition-transform">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-alien-light/10 to-alien-glow/10 flex items-center justify-center mb-6 border border-alien-glow/20">
                             <i data-lucide="zap" class="w-7 h-7 text-alien-glow"></i>
                         </div>
                         <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Blazing Fast</h3>
                         <p class="text-sm text-slate-500 dark:text-slate-400">Loads instantly. No lag, just sales.</p>
                     </div>
                     <div class="glass-card p-8 rounded-3xl relative overflow-hidden group hover:-translate-y-2 transition-all duration-300 hover:shadow-2xl hover:shadow-alien-glow/10 border border-white/5 hover:border-alien-glow/30">
-                        <div class="absolute -right-10 -top-10 w-32 h-32 bg-alien-glow/10 rounded-full blur-2xl group-hover:bg-alien-glow/20 transition-all"></div>
-                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-alien-light/10 to-alien-glow/10 flex items-center justify-center mb-6 border border-alien-glow/20 group-hover:scale-110 transition-transform">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-alien-light/10 to-alien-glow/10 flex items-center justify-center mb-6 border border-alien-glow/20">
                             <i data-lucide="smartphone" class="w-7 h-7 text-alien-glow"></i>
                         </div>
                         <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Mobile First</h3>
                         <p class="text-sm text-slate-500 dark:text-slate-400">Designed for vertical screens.</p>
                     </div>
                     <div class="glass-card p-8 rounded-3xl relative overflow-hidden group hover:-translate-y-2 transition-all duration-300 hover:shadow-2xl hover:shadow-alien-glow/10 border border-white/5 hover:border-alien-glow/30">
-                        <div class="absolute -right-10 -top-10 w-32 h-32 bg-alien-glow/10 rounded-full blur-2xl group-hover:bg-alien-glow/20 transition-all"></div>
-                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-alien-light/10 to-alien-glow/10 flex items-center justify-center mb-6 border border-alien-glow/20 group-hover:scale-110 transition-transform">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-alien-light/10 to-alien-glow/10 flex items-center justify-center mb-6 border border-alien-glow/20">
                             <i data-lucide="shield-check" class="w-7 h-7 text-alien-glow"></i>
                         </div>
                         <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Zero Risk</h3>
                         <p class="text-sm text-slate-500 dark:text-slate-400">We don't hold your money.</p>
                     </div>
                     <div class="glass-card p-8 rounded-3xl relative overflow-hidden group hover:-translate-y-2 transition-all duration-300 hover:shadow-2xl hover:shadow-alien-glow/10 border border-white/5 hover:border-alien-glow/30">
-                        <div class="absolute -right-10 -top-10 w-32 h-32 bg-alien-glow/10 rounded-full blur-2xl group-hover:bg-alien-glow/20 transition-all"></div>
-                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-alien-light/10 to-alien-glow/10 flex items-center justify-center mb-6 border border-alien-glow/20 group-hover:scale-110 transition-transform">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-alien-light/10 to-alien-glow/10 flex items-center justify-center mb-6 border border-alien-glow/20">
                             <i data-lucide="palette" class="w-7 h-7 text-alien-glow"></i>
                         </div>
                         <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Aesthetic</h3>
@@ -463,33 +373,127 @@
         </div>
 
         <div id="page-pricing" class="page-section hidden fade-in px-4 md:px-0">
-            <section class="max-w-5xl mx-auto py-4 md:py-20 flex flex-col items-center px-4 md:px-6">
-                <button onclick="switchTab('home')" class="flex items-center gap-2 text-sm text-alien-deep dark:text-alien-light hover:underline mb-6 md:mb-10 self-start font-bold"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Home</button>
-                <h2 class="text-2xl md:text-5xl font-bold text-slate-900 dark:text-white text-center mb-4 md:mb-6">Investment</h2>
-                <p class="text-xs md:text-lg text-slate-500 dark:text-slate-400 mb-8 md:mb-16 text-center">Zero risk. We grow when you grow.</p>
+            <section class="max-w-2xl mx-auto py-8 md:py-24 px-4 sm:px-6 font-sans">
+                <button onclick="switchTab('home')" class="flex items-center gap-2 text-sm text-alien-deep dark:text-alien-light hover:underline mb-10 font-bold"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
                 
-                <div class="grid md:grid-cols-2 gap-5 md:gap-8 w-full">
-                    <div class="glass-card bg-slate-900 dark:bg-slate-900 p-6 md:p-10 rounded-3xl text-white relative overflow-hidden group hover:border-alien-glow dark:hover:border-alien-glow/50 transition-all">
-                        <div class="absolute top-0 right-0 p-6 md:p-8 opacity-20 group-hover:opacity-40 transition-opacity"><i data-lucide="gift" class="w-24 h-24 md:w-32 md:h-32 text-alien-glow"></i></div>
-                        <div class="relative z-10">
-                            <div class="inline-block bg-alien-glow/20 border border-alien-glow/30 text-alien-light text-[10px] md:text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4">Limited Offer</div>
-                            <h3 class="text-xl md:text-2xl font-bold mb-2">Store Setup</h3>
-                            <div class="flex items-baseline gap-2 mb-4 md:mb-6"><span class="text-4xl md:text-5xl font-extrabold tracking-tight text-white">Free</span><span class="text-slate-400 line-through text-sm md:text-lg">KSh 20k</span></div>
-                            <ul class="space-y-3 md:space-y-4 mb-6 md:mb-8 text-xs md:text-sm text-slate-200">
-                                <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 md:w-5 md:h-5 text-alien-glow"></i> <strong>Zero Upfront Cost</strong></li>
-                                <li class="flex items-center gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 md:w-5 md:h-5 text-alien-glow"></i> We Upload Your Products</li>
-                            </ul>
-                            <button onclick="switchTab('contact')" class="w-full bg-alien-glow text-white dark:text-dark-950 font-bold py-3 md:py-4 rounded-xl hover:bg-white hover:text-slate-900 transition-colors text-sm md:text-base">Claim Free Setup</button>
+                <div class="text-center mb-10 font-sans">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">Choose Your Plan</h2>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm md:text-base">Transparent pricing. No hidden fees.</p>
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-4 items-stretch">
+                    <div id="student-card" class="flex-1 bg-white/40 dark:bg-white/5 backdrop-blur-lg border border-blue-200 dark:border-blue-500/30 rounded-2xl p-5 shadow-xl flex-col hidden hover:shadow-blue-500/20 transition duration-300 relative">
+                        <div class="absolute -top-2 right-4 bg-blue-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Student Deal</div>
+                        <h3 class="text-lg font-semibold tracking-tight text-slate-800 dark:text-white/90 mb-3">Student</h3>
+                        <div class="mb-4"><span class="text-3xl font-light text-slate-900 dark:text-white">KSh 2,500</span></div>
+                        <div class="space-y-3 text-sm flex-1 text-slate-600 dark:text-slate-300">
+                            <div class="flex justify-between border-b border-slate-200 dark:border-white/10 pb-2"><span>Duration</span> <span class="font-medium">25 Days</span></div>
+                            <div class="flex justify-between border-b border-slate-200 dark:border-white/10 pb-2"><span>Products</span> <span class="font-medium">15 Items</span></div>
+                            <div class="flex justify-between border-b border-slate-200 dark:border-white/10 pb-2"><span>Social</span> <span>1 Link</span></div>
                         </div>
+                        <button onclick="switchTab('contact')" class="w-full mt-5 py-2.5 rounded-xl bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium transition">Select Student</button>
                     </div>
-                    <div class="glass-card p-6 md:p-10 rounded-3xl relative flex flex-col justify-center border-slate-200 dark:border-white/5">
-                        <div class="absolute top-0 right-0 p-6 md:p-8"><span class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest">Hosting</span></div>
-                        <h3 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-2">Monthly Hosting</h3>
-                        <div class="flex items-baseline gap-2 mb-4 md:mb-6"><span class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">KSh 10k</span><span class="text-slate-500 dark:text-slate-400 text-sm md:text-lg">/mo</span></div>
-                        <ul class="space-y-3 md:space-y-4 mb-6 md:mb-8 text-xs md:text-sm text-slate-600 dark:text-slate-400">
-                            <li class="flex items-center gap-3"><i data-lucide="server" class="w-4 h-4 md:w-5 md:h-5 text-slate-400 dark:text-slate-500"></i> 99.9% Server Uptime</li>
-                            <li class="flex items-center gap-3"><i data-lucide="life-buoy" class="w-4 h-4 md:w-5 md:h-5 text-slate-400 dark:text-slate-500"></i> 24/7 Technical Support</li>
-                        </ul>
+
+                    <div class="flex-1 bg-white/40 dark:bg-white/5 backdrop-blur-lg border border-slate-200 dark:border-white/20 rounded-2xl p-5 shadow-xl transition duration-300 hover:shadow-2xl flex flex-col">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-lg font-semibold tracking-tight text-slate-800 dark:text-white/90">Starter</h3>
+                            <span class="text-[10px] uppercase tracking-wider text-slate-500 dark:text-white/40 px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10">basic</span>
+                        </div>
+                        <div class="mb-4">
+                            <span class="text-3xl font-light text-slate-900 dark:text-white">KSh 5,000</span>
+                            <span class="text-xs text-slate-500 dark:text-white/40 ml-1">/plan</span>
+                        </div>
+                        <div class="space-y-3 text-sm flex-1 text-slate-600 dark:text-slate-300">
+                            <div class="flex justify-between items-center border-b border-slate-200 dark:border-white/10 pb-2">
+                                <span class="text-slate-500 dark:text-white/50 font-medium">Duration</span>
+                                <span class="font-medium text-slate-800 dark:text-white">30 Days</span>
+                            </div>
+                            <div class="flex justify-between items-center border-b border-slate-200 dark:border-white/10 pb-2">
+                                <span class="text-slate-500 dark:text-white/50 font-medium">Products</span>
+                                <span class="font-medium text-slate-800 dark:text-white">11 Products</span>
+                            </div>
+                            <div class="flex justify-between items-center border-b border-slate-200 dark:border-white/10 pb-2">
+                                <span class="text-slate-500 dark:text-white/50 font-medium">Social</span>
+                                <span class="text-slate-400 dark:text-white/70 flex items-center gap-1.5"><i class="fas fa-times text-xs"></i><span class="text-xs">No Links</span></span>
+                            </div>
+                        </div>
+                        <button onclick="switchTab('contact')" class="w-full mt-5 py-2.5 px-3 rounded-xl bg-slate-100 dark:bg-white/10 border border-slate-200 dark:border-white/20 text-slate-700 dark:text-white text-sm font-medium backdrop-blur-sm hover:bg-slate-200 dark:hover:bg-white/20 transition flex items-center justify-center gap-2 group">
+                            <span>Select</span>
+                            <i class="fas fa-arrow-right text-xs opacity-0 group-hover:opacity-100 transition -translate-x-1 group-hover:translate-x-0.5"></i>
+                        </button>
+                    </div>
+
+                    <div class="flex-1 bg-white/60 dark:bg-white/5 backdrop-blur-lg border border-slate-200 dark:border-white/20 rounded-2xl p-5 shadow-xl flex flex-col relative pro-glow">
+                        <div class="absolute -top-2 right-4 flex items-center gap-1.5 bg-white dark:bg-black/40 backdrop-blur-md border border-green-500/40 rounded-full px-3 py-0.5 text-xs shadow-sm">
+                            <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                            <span class="text-green-600 dark:text-green-300 font-medium">best value</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-lg font-semibold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">Pro <span class="text-[10px] font-medium text-green-700 dark:text-green-300 bg-green-100 dark:bg-green-500/20 border border-green-200 dark:border-green-500/30 px-2 py-0.5 rounded-full">premium</span></h3>
+                        </div>
+                        <div class="mb-4">
+                            <span class="text-3xl font-light text-slate-900 dark:text-white">KSh 10,000</span>
+                            <span class="text-xs text-slate-500 dark:text-white/40 ml-1">/plan</span>
+                        </div>
+                        <div class="space-y-3 text-sm flex-1 text-slate-600 dark:text-slate-300">
+                            <div class="flex justify-between items-center border-b border-slate-200 dark:border-white/10 pb-2">
+                                <span class="text-slate-500 dark:text-white/50 font-medium">Duration</span>
+                                <span class="font-medium text-slate-900 dark:text-white">40 Days</span>
+                            </div>
+                            <div class="flex justify-between items-center border-b border-slate-200 dark:border-white/10 pb-2">
+                                <span class="text-slate-500 dark:text-white/50 font-medium">Products</span>
+                                <span class="font-medium text-green-600 dark:text-green-400 flex items-center gap-1"><span class="text-lg leading-4">∞</span> Unlimited</span>
+                            </div>
+                            <div class="flex justify-between items-center border-b border-slate-200 dark:border-white/10 pb-2">
+                                <span class="text-slate-500 dark:text-white/50 font-medium">Social</span>
+                                <span class="text-slate-800 dark:text-white flex items-center gap-1.5"><i class="fas fa-check text-green-500 text-sm"></i><span class="font-medium">All Links</span></span>
+                            </div>
+                        </div>
+                        <button onclick="switchTab('contact')" class="w-full mt-5 py-2.5 px-3 rounded-xl bg-green-500 text-white dark:bg-green-500/10 dark:border dark:border-green-500/40 text-sm font-medium backdrop-blur-sm hover:bg-green-600 dark:hover:bg-green-500/20 transition flex items-center justify-center gap-2 group shadow-lg shadow-green-500/20">
+                            <span>Select</span>
+                            <i class="fas fa-arrow-right text-xs text-white dark:text-green-300 group-hover:translate-x-1 transition"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-12 max-w-sm mx-auto">
+                    <div class="glass-card rounded-xl p-4 border border-slate-200 dark:border-white/10 flex flex-col items-center gap-3">
+                        <p class="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Student Discount</p>
+                        <div class="flex w-full gap-2">
+                            <input type="text" id="studentCodeInput" placeholder="Enter Code" class="flex-1 bg-transparent border border-slate-300 dark:border-white/20 rounded-lg px-3 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-alien-glow uppercase text-center placeholder-slate-400">
+                            <button onclick="checkStudentCode()" class="bg-slate-900 dark:bg-white text-white dark:text-black px-4 py-2 rounded-lg text-xs font-bold uppercase hover:opacity-90 transition">Apply</button>
+                        </div>
+                        <p id="codeError" class="text-red-500 text-xs hidden">Invalid Code</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="page-faq" class="page-section hidden fade-in px-4 md:px-0">
+            <section class="max-w-3xl mx-auto py-8 md:py-24 px-6">
+                <button onclick="switchTab('home')" class="flex items-center gap-2 text-sm text-alien-deep dark:text-alien-light hover:underline mb-10 font-bold"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
+                
+                <h2 class="text-3xl md:text-4xl font-bold text-center text-slate-900 dark:text-white mb-12">Frequently Asked Questions</h2>
+                
+                <div class="space-y-6">
+                    <div class="glass-card p-6 rounded-2xl border border-slate-200 dark:border-white/10">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2"><i data-lucide="globe" class="w-5 h-5 text-alien-glow"></i> Do I get a website link?</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">Yes! You get a free custom link in the format: <span class="text-alien-deep dark:text-alien-light font-mono bg-slate-100 dark:bg-white/10 px-1 rounded">businessname-whats-cart.com</span>. You can share this on Instagram, TikTok, and WhatsApp.</p>
+                    </div>
+                    
+                    <div class="glass-card p-6 rounded-2xl border border-slate-200 dark:border-white/10">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2"><i data-lucide="message-square" class="w-5 h-5 text-alien-glow"></i> Can I use my personal number?</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">We highly recommend using a dedicated WhatsApp Business number. This keeps your personal chats separate from customer orders and looks more professional.</p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl border border-slate-200 dark:border-white/10">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2"><i data-lucide="refresh-cw" class="w-5 h-5 text-alien-glow"></i> Can I update my products?</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">Yes. To update products, change prices, or remove items, simply contact our customer team on WhatsApp to raise a ticket. We handle all technical updates for you to keep things hassle-free.</p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl border border-slate-200 dark:border-white/10">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2"><i data-lucide="credit-card" class="w-5 h-5 text-alien-glow"></i> How do payments work?</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">Payments are handled directly between you and the customer on WhatsApp. We do not hold your money. You can request M-Pesa, Cash, or Bank Transfer directly in the chat.</p>
                     </div>
                 </div>
             </section>
@@ -523,6 +527,7 @@
     <div class="md:hidden fixed bottom-4 left-4 right-4 z-50">
         <div class="glass-nav rounded-xl p-1.5 flex justify-around items-center shadow-2xl border border-slate-200 dark:border-white/10">
             <button onclick="switchTab('home')" class="nav-btn p-3 rounded-lg transition-all" data-target="home"><i data-lucide="home" class="w-6 h-6 text-slate-800 dark:text-white"></i></button>
+            <button onclick="switchTab('faq')" class="nav-btn p-3 rounded-lg transition-all" data-target="faq"><i data-lucide="help-circle" class="w-6 h-6 text-slate-400 dark:text-slate-500"></i></button>
             <button onclick="switchTab('features')" class="nav-btn p-3 rounded-lg transition-all" data-target="features"><i data-lucide="zap" class="w-6 h-6 text-slate-400 dark:text-slate-500"></i></button>
             <button onclick="switchTab('how-it-works')" class="nav-btn p-3 rounded-lg transition-all" data-target="how-it-works"><i data-lucide="layers" class="w-6 h-6 text-slate-400 dark:text-slate-500"></i></button>
             <button onclick="switchTab('pricing')" class="nav-btn p-3 rounded-lg transition-all" data-target="pricing"><i data-lucide="credit-card" class="w-6 h-6 text-slate-400 dark:text-slate-500"></i></button>
@@ -534,14 +539,10 @@
         lucide.createIcons();
 
         function switchTab(tabId) {
-            // Hide all pages
             document.querySelectorAll('.page-section').forEach(el => el.classList.add('hidden'));
-            
-            // Show target page
             const target = document.getElementById('page-' + tabId);
             if(target) target.classList.remove('hidden');
 
-            // Update mobile nav icons
             document.querySelectorAll('.nav-btn i').forEach(icon => {
                 if(!icon.parentElement.classList.contains('bg-alien-glow')) {
                     icon.classList.remove('text-slate-800', 'dark:text-white');
@@ -550,13 +551,35 @@
                 }
             });
 
-            // Highlight active mobile nav icon
             const activeBtn = document.querySelector(`.nav-btn[data-target="${tabId}"] i`);
             if(activeBtn && !activeBtn.parentElement.classList.contains('bg-alien-glow')) {
                  activeBtn.setAttribute('class', `w-6 h-6 text-slate-800 dark:text-white`);
             }
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- STUDENT CODE LOGIC ---
+        const studentCodes = ['STUDENT25', 'CAMPUS2026', 'WHATSCLASS', 'LEARN50'];
+
+        function checkStudentCode() {
+            const input = document.getElementById('studentCodeInput');
+            const code = input.value.trim().toUpperCase();
+            const errorMsg = document.getElementById('codeError');
+            const studentCard = document.getElementById('student-card');
+
+            if (studentCodes.includes(code)) {
+                studentCard.classList.remove('hidden');
+                studentCard.classList.add('flex', 'unlock-reveal');
+                errorMsg.classList.add('hidden');
+                input.value = '';
+                input.placeholder = 'Code Applied!';
+                input.disabled = true;
+            } else {
+                errorMsg.classList.remove('hidden');
+                input.classList.add('border-red-500');
+                setTimeout(() => input.classList.remove('border-red-500'), 2000);
+            }
         }
     </script>
 </body>
