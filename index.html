@@ -614,7 +614,7 @@
             
             <div class="px-2 py-2 flex gap-2 overflow-x-auto no-scrollbar bg-[#f0f2f5] dark:bg-[#202c33] border-t border-gray-200 dark:border-gray-700/50">
                 <button onclick="sendQuickReply('Hello')" class="whitespace-nowrap text-xs bg-white dark:bg-[#2a3942] text-[#008069] dark:text-[#00a884] px-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-600 hover:bg-gray-50 transition shadow-sm font-medium">Hello</button>
-                <button onclick="sendQuickReply('About Us')" class="whitespace-nowrap text-xs bg-white dark:bg-[#2a3942] text-[#008069] dark:text-[#00a884] px-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-600 hover:bg-gray-50 transition shadow-sm font-medium">About Us</button>
+                <button onclick="sendQuickReply('Start Setup')" class="whitespace-nowrap text-xs bg-[#22c55e] text-white px-3 py-1.5 rounded-full hover:bg-green-600 transition shadow-sm font-bold">Start Setup</button>
                 <button onclick="sendQuickReply('Pricing?')" class="whitespace-nowrap text-xs bg-white dark:bg-[#2a3942] text-[#008069] dark:text-[#00a884] px-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-600 hover:bg-gray-50 transition shadow-sm font-medium">Pricing?</button>
                 <button onclick="sendQuickReply('Student Code?')" class="whitespace-nowrap text-xs bg-white dark:bg-[#2a3942] text-[#008069] dark:text-[#00a884] px-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-600 hover:bg-gray-50 transition shadow-sm font-medium">Student Code?</button>
                 <button onclick="sendQuickReply('See Demo')" class="whitespace-nowrap text-xs bg-white dark:bg-[#2a3942] text-[#008069] dark:text-[#00a884] px-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-600 hover:bg-gray-50 transition shadow-sm font-medium">See Demo</button>
@@ -902,6 +902,10 @@
                 chatState = 'waiting_for_student_code';
                 appendMessage("We have a special Student Deal!<br><br>Do you have a student discount code? Please type it below (or type 'cancel').");
             } 
+            else if (lowerText.includes("start") || lowerText.includes("setup") || lowerText.includes("build") || lowerText.includes("form")) {
+                // NEW: Connects to the Google Form
+                appendMessage("Awesome! We are ready to build your store. 🚀<br><br>The fastest way to get started is to fill out our quick onboarding form with your brand details and products.<br><br><a href='https://forms.gle/MJVSmxeTKgsZaTtp6' target='_blank' class='inline-block mt-2 bg-[#22c55e] text-white px-4 py-2 rounded-lg font-bold text-xs shadow-sm hover:opacity-90'>📝 Open Setup Form</a><br><br>Prefer to do it over chat? Just reply with your <b>Business Name</b> to connect with our human team!");
+            }
             else {
                 chatState = 'waiting_for_business_name';
                 appendMessage("I'm still learning! To get you the best help, let's connect you with our team on WhatsApp. First, what is your business name? (or type 'cancel')");
