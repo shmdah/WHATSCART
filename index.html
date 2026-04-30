@@ -88,6 +88,10 @@
 
         /* PRICING GLOW */
         .pro-glow { box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.3), 0 0 20px -2px rgba(34, 197, 94, 0.25), 0 10px 20px -5px rgba(0,0,0,0.5); }
+        
+        /* FOMO ANIMATION */
+        .fomo-pulse { animation: pulseRed 2s infinite; }
+        @keyframes pulseRed { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
         /* FOOTER */
         .wc-brand-footer { width: 100%; display: flex; justify-content: center; align-items: center; padding: 30px 0; opacity: 0.8; transition: opacity 0.3s ease; }
@@ -242,6 +246,18 @@
         <div id="page-home" class="page-section fade-in px-4 md:px-0">
             <section class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-8 md:gap-12 lg:gap-20 mb-12 md:mb-24 md:px-6">
                 <div class="flex-1 text-center md:text-left pt-4 md:pt-0 z-10">
+                    
+                    <!-- NEW FOMO BANNER -->
+                    <div onclick="switchTab('pricing')" class="group inline-flex items-center gap-2 md:gap-3 bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400 px-4 md:px-5 py-2 md:py-2.5 rounded-full mb-6 md:mb-8 font-bold text-xs md:text-sm cursor-pointer hover:border-red-500/50 hover:bg-red-500/20 hover:shadow-[0_0_20px_rgba(239,68,68,0.2)] transition-all">
+                        <span class="relative flex h-2.5 w-2.5">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
+                        </span>
+                        <span class="flex items-center gap-1"><i class="fas fa-bolt text-red-500"></i> <span class="uppercase tracking-widest text-[9px] md:text-[10px] bg-red-500 text-white px-2 py-0.5 rounded-md">Flash Sale</span></span>
+                        <span>Pro Plan now KSh 7,000 <span class="line-through opacity-50 ml-1 hidden sm:inline">KSh 10,000</span></span>
+                        <i class="fas fa-arrow-right text-[10px] md:text-xs ml-1 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+
                     <h1 class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4 md:mb-6 leading-[1.1]">
                         Sell Online <br />
                         <span class="text-transparent bg-clip-text bg-gradient-to-r from-alien-light via-alien-glow to-emerald-400 text-glow">The Aesthetic Way.</span>
@@ -455,7 +471,7 @@
                             <div class="flex justify-between border-b border-slate-200 dark:border-white/10 pb-1.5 md:pb-2"><span>Products</span> <span class="font-medium">15 Items</span></div>
                             <div class="flex justify-between border-b border-slate-200 dark:border-white/10 pb-1.5 md:pb-2"><span>Social</span> <span>1 Link</span></div>
                         </div>
-                        <button onclick="switchTab('contact')" class="w-full mt-4 md:mt-5 py-2 md:py-2.5 rounded-xl bg-blue-500 hover:bg-blue-600 text-white text-xs md:text-sm font-medium transition">Select Student</button>
+                        <button onclick="selectPlan('Student')" class="w-full mt-4 md:mt-5 py-2 md:py-2.5 rounded-xl bg-blue-500 hover:bg-blue-600 text-white text-xs md:text-sm font-medium transition">Select Student</button>
                     </div>
 
                     <div class="flex-1 bg-white/40 dark:bg-white/5 backdrop-blur-lg border border-slate-200 dark:border-white/20 rounded-2xl p-4 md:p-5 shadow-xl transition duration-300 hover:shadow-2xl flex flex-col">
@@ -481,23 +497,26 @@
                                 <span class="text-slate-800 dark:text-white flex items-center gap-1.5"><i class="fas fa-check text-green-500 text-xs md:text-sm"></i><span class="font-medium">1 Link</span></span>
                             </div>
                         </div>
-                        <button onclick="switchTab('contact')" class="w-full mt-4 md:mt-5 py-2 md:py-2.5 px-3 rounded-xl bg-slate-100 dark:bg-white/10 border border-slate-200 dark:border-white/20 text-slate-700 dark:text-white text-xs md:text-sm font-medium backdrop-blur-sm hover:bg-slate-200 dark:hover:bg-white/20 transition flex items-center justify-center gap-2 group">
+                        <button onclick="selectPlan('Starter')" class="w-full mt-4 md:mt-5 py-2 md:py-2.5 px-3 rounded-xl bg-slate-100 dark:bg-white/10 border border-slate-200 dark:border-white/20 text-slate-700 dark:text-white text-xs md:text-sm font-medium backdrop-blur-sm hover:bg-slate-200 dark:hover:bg-white/20 transition flex items-center justify-center gap-2 group">
                             <span>Select</span>
                             <i class="fas fa-arrow-right text-[10px] md:text-xs opacity-0 group-hover:opacity-100 transition -translate-x-1 group-hover:translate-x-0.5"></i>
                         </button>
                     </div>
 
-                    <div class="flex-1 bg-white/60 dark:bg-white/5 backdrop-blur-lg border border-slate-200 dark:border-white/20 rounded-2xl p-4 md:p-5 shadow-xl flex flex-col relative pro-glow">
-                        <div class="absolute -top-2 right-4 flex items-center gap-1.5 bg-white dark:bg-black/40 backdrop-blur-md border border-green-500/40 rounded-full px-2 md:px-3 py-0.5 text-[9px] md:text-xs shadow-sm">
-                            <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
-                            <span class="text-green-600 dark:text-green-300 font-medium">best value</span>
+                    <div class="flex-1 bg-white/60 dark:bg-white/5 backdrop-blur-lg border border-red-500/50 dark:border-red-500/40 rounded-2xl p-4 md:p-5 shadow-xl flex flex-col relative pro-glow">
+                        <div class="absolute -top-2 right-4 flex items-center gap-1.5 bg-white dark:bg-black/40 backdrop-blur-md border border-red-500/40 rounded-full px-2 md:px-3 py-0.5 text-[9px] md:text-xs shadow-sm">
+                            <span class="w-1.5 h-1.5 rounded-full bg-red-500 fomo-pulse"></span>
+                            <span class="text-red-600 dark:text-red-400 font-bold uppercase">Flash Sale</span>
                         </div>
                         <div class="flex items-center justify-between mb-2 md:mb-3">
                             <h3 class="text-base md:text-lg font-semibold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">Pro <span class="text-[9px] md:text-[10px] font-medium text-green-700 dark:text-green-300 bg-green-100 dark:bg-green-500/20 border border-green-200 dark:border-green-500/30 px-2 py-0.5 rounded-full">premium</span></h3>
                         </div>
-                        <div class="mb-3 md:mb-4">
-                            <span class="text-2xl md:text-3xl font-light text-slate-900 dark:text-white">KSh 10,000</span>
-                            <span class="text-[10px] md:text-xs text-slate-500 dark:text-white/40 ml-1">/plan</span>
+                        <div class="mb-3 md:mb-4 flex flex-col">
+                            <div class="flex items-center gap-2">
+                                <span class="text-2xl md:text-3xl font-light text-slate-900 dark:text-white">KSh 7,000</span>
+                                <span class="text-sm md:text-base line-through text-slate-400 dark:text-slate-500">10,000</span>
+                            </div>
+                            <span class="text-[10px] md:text-[11px] text-red-500 dark:text-red-400 font-medium mt-1"><i class="fas fa-clock mr-1"></i> Ends in 48 hours</span>
                         </div>
                         <div class="space-y-2 md:space-y-3 text-xs md:text-sm flex-1 text-slate-600 dark:text-slate-300">
                             <div class="flex justify-between items-center border-b border-slate-200 dark:border-white/10 pb-1.5 md:pb-2">
@@ -506,16 +525,16 @@
                             </div>
                             <div class="flex justify-between items-center border-b border-slate-200 dark:border-white/10 pb-1.5 md:pb-2">
                                 <span class="text-slate-500 dark:text-white/50 font-medium">Products</span>
-                                <span class="font-medium text-green-600 dark:text-green-400 flex items-center gap-1"><span class="text-base md:text-lg leading-4">∞</span> Unlimited</span>
+                                <span class="font-medium text-red-500 dark:text-red-400 flex items-center gap-1"><span class="text-base md:text-lg leading-4">∞</span> Unlimited</span>
                             </div>
                             <div class="flex justify-between items-center border-b border-slate-200 dark:border-white/10 pb-1.5 md:pb-2">
                                 <span class="text-slate-500 dark:text-white/50 font-medium">Social</span>
                                 <span class="text-slate-800 dark:text-white flex items-center gap-1.5"><i class="fas fa-check text-green-500 text-xs md:text-sm"></i><span class="font-medium">All Links</span></span>
                             </div>
                         </div>
-                        <button onclick="switchTab('contact')" class="w-full mt-4 md:mt-5 py-2 md:py-2.5 px-3 rounded-xl bg-green-500 text-white dark:bg-green-500/10 dark:border dark:border-green-500/40 text-xs md:text-sm font-medium backdrop-blur-sm hover:bg-green-600 dark:hover:bg-green-500/20 transition flex items-center justify-center gap-2 group shadow-lg shadow-green-500/20">
-                            <span>Select</span>
-                            <i class="fas fa-arrow-right text-[10px] md:text-xs text-white dark:text-green-300 group-hover:translate-x-1 transition"></i>
+                        <button onclick="selectPlan('Pro')" class="w-full mt-4 md:mt-5 py-2 md:py-2.5 px-3 rounded-xl bg-red-500 text-white dark:bg-red-500/20 dark:border dark:border-red-500/40 text-xs md:text-sm font-bold backdrop-blur-sm hover:bg-red-600 dark:hover:bg-red-500/30 transition flex items-center justify-center gap-2 group shadow-lg shadow-red-500/20">
+                            <span>Claim 30% Off</span>
+                            <i class="fas fa-arrow-right text-[10px] md:text-xs text-white group-hover:translate-x-1 transition"></i>
                         </button>
                     </div>
                 </div>
@@ -730,6 +749,12 @@
             }
         }
 
+        // --- PLAN SELECTION LOGIC ---
+        function selectPlan(planName) {
+            const msg = `🚀 Hi! I am ready to launch my store. I would like to get the WhatsCart *${planName} Plan*.`;
+            window.open(`https://wa.me/254796600432?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
         // --- WHATSAPP CHATBOT STATE LOGIC ---
         let chatState = 'normal';
         let capturedBusinessName = '';
@@ -849,7 +874,7 @@
                 
                 if (studentCodes.includes(text.toUpperCase().trim())) {
                     chatState = 'normal';
-                    appendMessage("<strong>Valid Code!</strong><br><video src='stickers/sicker (1).mp4' autoplay loop muted playsinline class='w-24 rounded-lg mt-2 mb-2 pointer-events-none shadow-sm border border-black/5 block'></video>The Student Plan gives you:<br>Duration: 25 Days<br>Products: 15 Items<br>Socials: 1 Link<br><br>Check the Pricing section on the page to claim your deal!");
+                    appendMessage("<strong><i class='fas fa-check-circle text-alien-glow mr-1'></i> Valid Code!</strong><br><video src='stickers/sicker (1).mp4' autoplay loop muted playsinline class='w-24 rounded-lg mt-2 mb-2 pointer-events-none shadow-sm border border-black/5 block'></video>The Student Plan gives you:<br>Duration: 25 Days<br>Products: 15 Items<br>Socials: 1 Link<br><br>Check the Pricing section on the page to claim your deal!");
                     
                     // Auto-reveal the card on the pricing page if valid
                     const studentCard = document.getElementById('student-card');
@@ -858,7 +883,7 @@
                         studentCard.classList.add('flex', 'unlock-reveal');
                     }
                 } else {
-                    appendMessage("Hmm, that code doesn't look right. Please try entering it again, or type 'cancel' to go back.");
+                    appendMessage("<i class='fas fa-exclamation-circle text-red-500 mr-1'></i> Hmm, that code doesn't look right. Please try entering it again, or type 'cancel' to go back.");
                 }
                 return;
             }
@@ -872,7 +897,7 @@
                 }
                 chatState = 'normal';
                 capturedBusinessName = text.trim();
-                appendMessage("Awesome! Redirecting you to our team...");
+                appendMessage("<i class='fas fa-spinner fa-spin text-alien-glow mr-2'></i>Awesome! Redirecting you to our team...");
                 setTimeout(() => {
                     window.open(`https://wa.me/254796600432?text=Hi!%20I%20want%20to%20set%20up%20WhatsCart%20for%20my%20business:%20${encodeURIComponent(capturedBusinessName)}`, '_blank');
                 }, 1500);
@@ -881,34 +906,34 @@
 
             // STATE: Normal WA Logic
             if (lowerText === 'hi' || lowerText === 'hello' || lowerText.includes('hey') || lowerText.includes('howdy')) {
-                appendMessage("Hello there! Welcome to WhatsCart. Would you like to see a demo, check our pricing, or learn more about what we do?<br><img src='stickers/sicker (2).jpg' alt='Sticker' class='w-20 h-20 rounded-lg mt-2 object-cover block shadow-sm border border-black/5'>");
+                appendMessage("Hello there! <i class='fas fa-hand-sparkles text-alien-glow ml-1'></i> Welcome to WhatsCart. Would you like to see a demo, check our pricing, or learn more about what we do?<br><img src='stickers/sicker (2).jpg' alt='Sticker' class='w-20 h-20 rounded-lg mt-2 object-cover block shadow-sm border border-black/5'>");
             } 
             else if (lowerText.includes('sasa') || lowerText.includes('niaje') || lowerText.includes('mambo')) {
-                appendMessage("Fit sana! Welcome to WhatsCart. How can we level up your hustle today?<br><img src='stickers/sicker (2).jpg' alt='Sticker' class='w-20 h-20 rounded-lg mt-2 object-cover block shadow-sm border border-black/5'>");
+                appendMessage("Fit sana! Welcome to WhatsCart. How can we level up your hustle today? <i class='fas fa-bolt text-alien-glow ml-1'></i><br><img src='stickers/sicker (2).jpg' alt='Sticker' class='w-20 h-20 rounded-lg mt-2 object-cover block shadow-sm border border-black/5'>");
             }
             else if (lowerText.includes("pric") || lowerText.includes("cost") || lowerText.includes("pack") || lowerText.includes("plan")) {
-                appendMessage("We have two main packages to help you start selling instantly on WhatsApp!<br><br><strong>Starter Package (KSh 5,000):</strong><br>Perfect for getting started. We build your store, host it for 30 days, allow up to 20 products, and let you connect 1 social media link.<br><br><strong>Pro Package (KSh 10,000):</strong><br>For growing brands! You get 40 days of hosting, UNLIMITED products, and unlimited social media links.<br><br><em>Note: Adding your own custom domain is just a one-time yearly fee.</em><br><img src='stickers/sicker (1).jpg' alt='Pricing Sticker' class='w-24 h-24 rounded-lg mt-2 object-cover block shadow-sm border border-black/5'>");
+                appendMessage("<i class='fas fa-tags text-alien-glow mb-2 text-lg'></i><br>We have two main packages to help you start selling instantly on WhatsApp!<br><br><strong>Starter Package (KSh 5,000):</strong><br>Perfect for getting started. We build your store, host it for 30 days, allow up to 20 products, and let you connect 1 social media link.<br><br><strong>Pro Package (<s class='text-slate-400'>KSh 10,000</s> KSh 7,000 <i class='fas fa-fire text-red-500'></i>):</strong><br><i class='text-red-500 text-xs mb-2 block'>*Flash sale ends soon!</i>For growing brands! You get 40 days of hosting, UNLIMITED products, and unlimited social media links.<br><br><em>Note: Adding your own custom domain is just a one-time yearly fee.</em><br><img src='stickers/sicker (1).jpg' alt='Pricing Sticker' class='w-24 h-24 rounded-lg mt-2 object-cover block shadow-sm border border-black/5'>");
             } 
             else if (lowerText.includes("demo")) {
-                appendMessage("Check out our live demo store!<br><br><strong>QuickMacc Store</strong> is running smoothly on our platform. <br><br><a href='https://quickmaccstore.whats-cart.com/' target='_blank' class='text-[#00a884] dark:text-green-400 hover:underline font-bold'>Click here to view the Demo</a>");
+                appendMessage("<i class='fas fa-laptop-code text-alien-glow mb-2 text-lg'></i><br>Check out our live demo store!<br><br><strong>QuickMacc Store</strong> is running smoothly on our platform. <br><br><a href='https://quickmaccstore.whats-cart.com/' target='_blank' class='text-[#00a884] dark:text-green-400 hover:underline font-bold'><i class='fas fa-external-link-alt mr-1'></i>Click here to view the Demo</a>");
             } 
             else if (lowerText.includes("about") || lowerText.includes("what do you do") || lowerText.includes("what we do") || lowerText.includes("company")) {
-                appendMessage("<strong>About Us:</strong><br>We bridge the gap between social media and instant purchasing. We turn your WhatsApp into an automated checkout machine! We build aesthetic, mobile-first stores so your customers can shop easily without complex websites, and send formatted orders directly to your WhatsApp.");
+                appendMessage("<strong><i class='fas fa-bullseye text-alien-glow mr-1'></i> About Us:</strong><br>We bridge the gap between social media and instant purchasing. We turn your WhatsApp into an automated checkout machine! We build aesthetic, mobile-first stores so your customers can shop easily without complex websites, and send formatted orders directly to your WhatsApp.");
             } 
             else if (lowerText.includes("domain") || lowerText.includes("link") || lowerText.includes("website")) {
-                appendMessage("Yes! Every store gets a free custom link (e.g., <i>yourname.whats-cart.com</i>). If you want to connect your own .com or .co.ke domain, we can help set that up too for a one-time yearly fee!");
+                appendMessage("<i class='fas fa-globe text-alien-glow mr-1'></i> Yes! Every store gets a free custom link (e.g., <i>yourname.whats-cart.com</i>). If you want to connect your own .com or .co.ke domain, we can help set that up too for a one-time yearly fee!");
             } 
             else if (lowerText.includes("student") || lowerText.includes("discount") || lowerText.includes("code")) {
                 chatState = 'waiting_for_student_code';
-                appendMessage("We have a special Student Deal!<br><br>Do you have a student discount code? Please type it below (or type 'cancel').");
+                appendMessage("<i class='fas fa-graduation-cap text-blue-500 mr-1'></i> We have a special Student Deal!<br><br>Do you have a student discount code? Please type it below (or type 'cancel').");
             } 
             else if (lowerText.includes("start") || lowerText.includes("setup") || lowerText.includes("build") || lowerText.includes("form")) {
                 // NEW: Connects to the Google Form
-                appendMessage("Awesome! We are ready to build your store. 🚀<br><br>The fastest way to get started is to fill out our quick onboarding form with your brand details and products.<br><br><a href='https://forms.gle/MJVSmxeTKgsZaTtp6' target='_blank' class='inline-block mt-2 bg-[#22c55e] text-white px-4 py-2 rounded-lg font-bold text-xs shadow-sm hover:opacity-90'>📝 Open Setup Form</a><br><br>Prefer to do it over chat? Just reply with your <b>Business Name</b> to connect with our human team!");
+                appendMessage("Awesome! We are ready to build your store. <i class='fas fa-rocket text-alien-glow ml-1'></i><br><br>The fastest way to get started is to fill out our quick onboarding form with your brand details and products.<br><br><a href='https://forms.gle/MJVSmxeTKgsZaTtp6' target='_blank' class='inline-block mt-2 bg-[#22c55e] text-white px-4 py-2 rounded-lg font-bold text-xs shadow-sm hover:opacity-90'><i class='fas fa-clipboard-list mr-1'></i> Open Setup Form</a><br><br>Prefer to do it over chat? Just reply with your <b>Business Name</b> to connect with our human team!");
             }
             else {
                 chatState = 'waiting_for_business_name';
-                appendMessage("I'm still learning! To get you the best help, let's connect you with our team on WhatsApp. First, what is your business name? (or type 'cancel')");
+                appendMessage("<i class='fas fa-robot text-slate-400 mb-2 text-lg'></i><br>I'm still learning! To get you the best help, let's connect you with our team on WhatsApp. First, what is your business name? (or type 'cancel')");
             }
         }
     </script>
