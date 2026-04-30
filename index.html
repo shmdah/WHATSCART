@@ -471,7 +471,7 @@
                             <div class="flex justify-between border-b border-slate-200 dark:border-white/10 pb-1.5 md:pb-2"><span>Products</span> <span class="font-medium">15 Items</span></div>
                             <div class="flex justify-between border-b border-slate-200 dark:border-white/10 pb-1.5 md:pb-2"><span>Social</span> <span>1 Link</span></div>
                         </div>
-                        <button onclick="selectPlan('Student')" class="w-full mt-4 md:mt-5 py-2 md:py-2.5 rounded-xl bg-blue-500 hover:bg-blue-600 text-white text-xs md:text-sm font-medium transition relative z-20">Select Student</button>
+                    <button onclick="selectPlan('Student')" class="w-full mt-4 md:mt-5 py-2 md:py-2.5 rounded-xl bg-blue-500 hover:bg-blue-600 active:scale-95 text-white text-xs md:text-sm font-medium transition relative z-20 cursor-pointer">Select Student</button>
                     </div>
 
                     <div class="flex-1 bg-white/40 dark:bg-white/5 backdrop-blur-lg border border-slate-200 dark:border-white/20 rounded-2xl p-4 md:p-5 shadow-xl transition duration-300 hover:shadow-2xl flex flex-col z-10 relative">
@@ -497,7 +497,7 @@
                                 <span class="text-slate-800 dark:text-white flex items-center gap-1.5"><i class="fas fa-check text-green-500 text-xs md:text-sm"></i><span class="font-medium">1 Link</span></span>
                             </div>
                         </div>
-                        <button onclick="selectPlan('Starter')" class="w-full mt-4 md:mt-5 py-2 md:py-2.5 px-3 rounded-xl bg-slate-100 dark:bg-white/10 border border-slate-200 dark:border-white/20 text-slate-700 dark:text-white text-xs md:text-sm font-medium backdrop-blur-sm hover:bg-slate-200 dark:hover:bg-white/20 transition flex items-center justify-center gap-2 group relative z-20">
+                    <button onclick="selectPlan('Starter')" class="w-full mt-4 md:mt-5 py-2 md:py-2.5 px-3 rounded-xl bg-slate-100 dark:bg-white/10 border border-slate-200 dark:border-white/20 text-slate-700 dark:text-white text-xs md:text-sm font-medium backdrop-blur-sm hover:bg-slate-200 dark:hover:bg-white/20 active:scale-95 transition flex items-center justify-center gap-2 group relative z-20 cursor-pointer">
                             <span>Select</span>
                             <i class="fas fa-arrow-right text-[10px] md:text-xs opacity-0 group-hover:opacity-100 transition -translate-x-1 group-hover:translate-x-0.5"></i>
                         </button>
@@ -532,7 +532,7 @@
                                 <span class="text-slate-800 dark:text-white flex items-center gap-1.5"><i class="fas fa-check text-green-500 text-xs md:text-sm"></i><span class="font-medium">All Links</span></span>
                             </div>
                         </div>
-                        <button onclick="selectPlan('Pro')" class="w-full mt-4 md:mt-5 py-2 md:py-2.5 px-3 rounded-xl bg-red-500 text-white dark:bg-red-500/20 dark:border dark:border-red-500/40 text-xs md:text-sm font-bold backdrop-blur-sm hover:bg-red-600 dark:hover:bg-red-500/30 transition flex items-center justify-center gap-2 group shadow-lg shadow-red-500/20 relative z-20">
+                    <button onclick="selectPlan('Pro')" class="w-full mt-4 md:mt-5 py-2 md:py-2.5 px-3 rounded-xl bg-red-500 text-white dark:bg-red-500/20 dark:border dark:border-red-500/40 text-xs md:text-sm font-bold backdrop-blur-sm hover:bg-red-600 dark:hover:bg-red-500/30 active:scale-95 transition flex items-center justify-center gap-2 group shadow-lg shadow-red-500/20 relative z-20 cursor-pointer">
                             <span>Claim 30% Off</span>
                             <i class="fas fa-arrow-right text-[10px] md:text-xs text-white group-hover:translate-x-1 transition"></i>
                         </button>
@@ -544,7 +544,7 @@
                         <p class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Student Discount</p>
                         <div class="flex w-full gap-2">
                             <input type="text" id="studentCodeInput" placeholder="Enter Code" class="flex-1 bg-transparent border border-slate-300 dark:border-white/20 rounded-lg px-3 py-2 text-xs md:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-alien-glow uppercase text-center placeholder-slate-400">
-                            <button onclick="checkStudentCode()" class="bg-slate-900 dark:bg-white text-white dark:text-black px-4 py-2 rounded-lg text-[10px] md:text-xs font-bold uppercase hover:opacity-90 transition">Apply</button>
+                        <button onclick="checkStudentCode()" class="bg-slate-900 dark:bg-white text-white dark:text-black px-4 py-2 rounded-lg text-[10px] md:text-xs font-bold uppercase hover:opacity-90 active:scale-95 transition cursor-pointer">Apply</button>
                         </div>
                         <p id="codeError" class="text-red-500 text-xs hidden">Invalid Code</p>
                     </div>
@@ -752,7 +752,7 @@
         // --- PLAN SELECTION LOGIC ---
         function selectPlan(planName) {
             const msg = `Hi! I am ready to launch my store. I would like to get the WhatsCart *${planName} Plan*.`;
-            window.location.href = `https://wa.me/254796600432?text=${encodeURIComponent(msg)}`;
+            window.open(`https://wa.me/254796600432?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
         // --- WHATSAPP CHATBOT STATE LOGIC ---
