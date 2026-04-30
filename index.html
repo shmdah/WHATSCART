@@ -61,7 +61,6 @@
         }
     </script>
     <style>
-        body, div, nav, button, section, p, h1, h2, h3, span, img, a { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .fade-in { animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
         
@@ -86,8 +85,10 @@
         #honey-loader.hide { opacity: 0; visibility: hidden; pointer-events: none; display: none !important; }
         .loader-icon { width: 64px; height: 64px; border-radius: 18px; background: linear-gradient(135deg, #22c55e, #15803d); display: flex; align-items: center; justify-content: center; color: #020617; font-size: 26px; box-shadow: 0 0 40px rgba(34,197,94,0.5); animation: introPop 0.45s cubic-bezier(0.16,1,0.3,1); }
 
-        /* PRICING GLOW & FOMO ANIMATION */
+        /* PRICING GLOW */
         .pro-glow { box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.3), 0 0 20px -2px rgba(34, 197, 94, 0.25), 0 10px 20px -5px rgba(0,0,0,0.5); }
+        
+        /* FOMO ANIMATION */
         .fomo-pulse { animation: pulseRed 2s infinite; }
         @keyframes pulseRed { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
@@ -167,7 +168,7 @@
         <div class="loader-icon"><i class="fas fa-shopping-cart"></i></div>
     </div>
 
-    <!-- Background effects isolated from clicks -->
+    <!-- Background effects isolated with pointer-events-none -->
     <div class="fixed inset-0 w-full h-full -z-10 overflow-hidden pointer-events-none transform-gpu">
         <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] md:w-[1000px] md:h-[1000px] bg-alien-light/20 dark:bg-alien-deep/30 rounded-full blur-[100px] mix-blend-screen dark:mix-blend-screen animate-alien pointer-events-none"></div>
         <div class="absolute bottom-[-10%] right-[-10%] w-[400px] h-[400px] md:w-[800px] md:h-[800px] bg-alien-glow/20 dark:bg-alien-glow/10 rounded-full blur-[80px] mix-blend-screen dark:mix-blend-screen animate-alien-slow pointer-events-none"></div>
@@ -191,9 +192,9 @@
                     <button onclick="toggleTheme()" class="p-3 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 transition-colors">
                         <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i><i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
                     </button>
-                    <button onclick="openWhatsAppGeneral()" class="bg-slate-900 dark:bg-white text-white dark:text-dark-950 px-8 py-3 rounded-full text-sm font-bold transition-all hover:bg-alien-glow dark:hover:bg-alien-light dark:hover:text-white transform hover:-translate-y-1 shadow-lg shadow-alien-glow/20 z-50 pointer-events-auto">
+                    <a href="https://wa.me/254796600432" class="bg-slate-900 dark:bg-white text-white dark:text-dark-950 px-8 py-3 rounded-full text-sm font-bold transition-all hover:bg-alien-glow dark:hover:bg-alien-light dark:hover:text-white transform hover:-translate-y-1 shadow-lg shadow-alien-glow/20 relative z-50 pointer-events-auto">
                         Start Now
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -201,7 +202,7 @@
 
     <!-- Mobile Header -->
     <div class="md:hidden fixed top-0 w-full z-40 px-3 pt-3 flex justify-between items-center pointer-events-none">
-        <div class="glass-nav rounded-2xl p-2.5 flex items-center shadow-lg border border-white/20 pointer-events-auto" onclick="switchTab('home')">
+        <div class="glass-nav rounded-2xl p-2.5 flex items-center shadow-lg border border-white/20 pointer-events-auto relative z-50" onclick="switchTab('home')">
             <div class="flex items-center gap-2">
                 <div class="wc-brand-icon shadow-lg scale-90"><i class="fas fa-shopping-cart"></i></div>
                 <span class="font-bold text-base tracking-tight text-slate-900 dark:text-white">WhatsCart</span>
@@ -222,7 +223,7 @@
             <button onclick="navigateFromMenu('how-it-works')" class="hover:text-alien-glow text-left w-full transition-colors border-b border-black/5 dark:border-white/10 pb-3">How it Works</button>
             <button onclick="navigateFromMenu('pricing')" class="hover:text-alien-glow text-left w-full transition-colors border-b border-black/5 dark:border-white/10 pb-3">Pricing</button>
             <button onclick="navigateFromMenu('faq')" class="hover:text-alien-glow text-left w-full transition-colors border-b border-black/5 dark:border-white/10 pb-3">FAQ</button>
-            <button onclick="openWhatsAppGeneral()" class="text-alien-glow text-left w-full border-b border-black/5 dark:border-white/10 pb-3 z-50 pointer-events-auto">Start Now</button>
+            <a href="https://wa.me/254796600432" class="text-alien-glow text-left w-full border-b border-black/5 dark:border-white/10 pb-3 z-50 pointer-events-auto">Start Now</a>
         </div>
         <div class="mt-auto flex flex-col items-center gap-5 w-full pt-6 border-t border-black/5 dark:border-white/10">
             <button onclick="toggleMobileMenu()" class="text-[10px] text-slate-500 border border-slate-300 dark:border-white/20 px-6 py-2 rounded-full font-bold w-full text-center hover:bg-black/5 dark:hover:bg-white/5 transition-colors uppercase">CLOSE</button>
@@ -231,9 +232,9 @@
 
     <main class="flex-grow pt-20 md:pt-40 relative z-10">
         
-        <div id="page-home" class="page-section fade-in px-4 md:px-0">
-            <section class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-8 md:gap-12 lg:gap-20 mb-12 md:mb-24 md:px-6">
-                <div class="flex-1 text-center md:text-left pt-4 md:pt-0 z-20 pointer-events-auto">
+        <div id="page-home" class="page-section fade-in px-4 md:px-0 relative z-20">
+            <section class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-8 md:gap-12 lg:gap-20 mb-12 md:mb-24 md:px-6 relative z-20">
+                <div class="flex-1 text-center md:text-left pt-4 md:pt-0 z-30 pointer-events-auto">
                     
                     <button onclick="switchTab('pricing')" class="group inline-flex items-center gap-2 md:gap-3 bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400 px-4 md:px-5 py-2 md:py-2.5 rounded-full mb-6 md:mb-8 font-bold text-xs md:text-sm cursor-pointer hover:border-red-500/50 hover:bg-red-500/20 hover:shadow-[0_0_20px_rgba(239,68,68,0.2)] transition-all relative z-50 pointer-events-auto">
                         <span class="relative flex h-2.5 w-2.5">
@@ -289,7 +290,7 @@
                 </div>
             </section>
 
-            <section class="border-y border-slate-200 dark:border-white/5 bg-slate-100 dark:bg-white/[0.02] py-4 md:py-8 overflow-hidden mb-12 md:mb-24 relative">
+            <section class="border-y border-slate-200 dark:border-white/5 bg-slate-100 dark:bg-white/[0.02] py-4 md:py-8 overflow-hidden mb-12 md:mb-24 relative pointer-events-none">
                 <div class="whitespace-nowrap animate-marquee flex gap-12 md:gap-32 items-center text-slate-500 dark:text-slate-300 font-extrabold text-[10px] md:text-base uppercase tracking-[0.25em]">
                     <span class="hover:text-alien-glow transition-colors cursor-default">Launch in Seconds</span> <span class="text-alien-glow opacity-80">✦</span> 
                     <span class="hover:text-alien-glow transition-colors cursor-default">WhatsApp Checkout</span> <span class="text-alien-glow opacity-80">✦</span> 
@@ -300,37 +301,37 @@
                 </div>
             </section>
 
-            <section class="w-full pb-12 md:pb-32 overflow-hidden px-0">
+            <section class="w-full pb-12 md:pb-32 overflow-hidden px-0 relative z-20 pointer-events-auto">
                 <h3 class="text-center font-bold text-slate-900 dark:text-white mb-6 md:mb-12 text-xl md:text-3xl">Perfect For</h3>
                 <div class="flex overflow-x-auto gap-4 md:gap-6 px-4 md:px-8 pb-4 no-scrollbar snap-x snap-mandatory">
-                    <div class="snap-center shrink-0 w-24 h-24 md:w-32 md:h-32 glass-card rounded-2xl flex flex-col items-center justify-center gap-2 md:gap-3 p-2 text-center hover:-translate-y-1 transition-transform bg-white/80 dark:bg-white/5 hover:border-alien-glow/50 cursor-pointer border border-white/5">
+                    <div class="snap-center shrink-0 w-24 h-24 md:w-32 md:h-32 glass-card rounded-2xl flex flex-col items-center justify-center gap-2 md:gap-3 p-2 text-center hover:-translate-y-1 transition-transform bg-white/80 dark:bg-white/5 hover:border-alien-glow/50 cursor-pointer border border-white/5 relative z-30">
                         <div class="glass-icon w-8 h-8 md:w-10 md:h-10 rounded-xl flex items-center justify-center"><i data-lucide="shirt" class="w-4 h-4 md:w-5 md:h-5 text-alien-glow"></i></div>
                         <span class="text-[9px] md:text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">Fashion</span>
                     </div>
-                    <div class="snap-center shrink-0 w-24 h-24 md:w-32 md:h-32 glass-card rounded-2xl flex flex-col items-center justify-center gap-2 md:gap-3 p-2 text-center hover:-translate-y-1 transition-transform bg-white/80 dark:bg-white/5 hover:border-alien-glow/50 cursor-pointer border border-white/5">
+                    <div class="snap-center shrink-0 w-24 h-24 md:w-32 md:h-32 glass-card rounded-2xl flex flex-col items-center justify-center gap-2 md:gap-3 p-2 text-center hover:-translate-y-1 transition-transform bg-white/80 dark:bg-white/5 hover:border-alien-glow/50 cursor-pointer border border-white/5 relative z-30">
                         <div class="glass-icon w-8 h-8 md:w-10 md:h-10 rounded-xl flex items-center justify-center"><i data-lucide="utensils" class="w-4 h-4 md:w-5 md:h-5 text-alien-glow"></i></div>
                         <span class="text-[9px] md:text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">Food</span>
                     </div>
-                    <div class="snap-center shrink-0 w-24 h-24 md:w-32 md:h-32 glass-card rounded-2xl flex flex-col items-center justify-center gap-2 md:gap-3 p-2 text-center hover:-translate-y-1 transition-transform bg-white/80 dark:bg-white/5 hover:border-alien-glow/50 cursor-pointer border border-white/5">
+                    <div class="snap-center shrink-0 w-24 h-24 md:w-32 md:h-32 glass-card rounded-2xl flex flex-col items-center justify-center gap-2 md:gap-3 p-2 text-center hover:-translate-y-1 transition-transform bg-white/80 dark:bg-white/5 hover:border-alien-glow/50 cursor-pointer border border-white/5 relative z-30">
                         <div class="glass-icon w-8 h-8 md:w-10 md:h-10 rounded-xl flex items-center justify-center"><i data-lucide="sparkles" class="w-4 h-4 md:w-5 md:h-5 text-alien-glow"></i></div>
                         <span class="text-[9px] md:text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">Beauty</span>
                     </div>
-                    <div class="snap-center shrink-0 w-24 h-24 md:w-32 md:h-32 glass-card rounded-2xl flex flex-col items-center justify-center gap-2 md:gap-3 p-2 text-center hover:-translate-y-1 transition-transform bg-white/80 dark:bg-white/5 hover:border-alien-glow/50 cursor-pointer border border-white/5">
+                    <div class="snap-center shrink-0 w-24 h-24 md:w-32 md:h-32 glass-card rounded-2xl flex flex-col items-center justify-center gap-2 md:gap-3 p-2 text-center hover:-translate-y-1 transition-transform bg-white/80 dark:bg-white/5 hover:border-alien-glow/50 cursor-pointer border border-white/5 relative z-30">
                         <div class="glass-icon w-8 h-8 md:w-10 md:h-10 rounded-xl flex items-center justify-center"><i data-lucide="smartphone" class="w-4 h-4 md:w-5 md:h-5 text-alien-glow"></i></div>
                         <span class="text-[9px] md:text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">Gadgets</span>
                     </div>
-                    <div class="snap-center shrink-0 w-24 h-24 md:w-32 md:h-32 glass-card rounded-2xl flex flex-col items-center justify-center gap-2 md:gap-3 p-2 text-center hover:-translate-y-1 transition-transform bg-white/80 dark:bg-white/5 hover:border-alien-glow/50 cursor-pointer border border-white/5">
+                    <div class="snap-center shrink-0 w-24 h-24 md:w-32 md:h-32 glass-card rounded-2xl flex flex-col items-center justify-center gap-2 md:gap-3 p-2 text-center hover:-translate-y-1 transition-transform bg-white/80 dark:bg-white/5 hover:border-alien-glow/50 cursor-pointer border border-white/5 relative z-30">
                         <div class="glass-icon w-8 h-8 md:w-10 md:h-10 rounded-xl flex items-center justify-center"><i data-lucide="footprints" class="w-4 h-4 md:w-5 md:h-5 text-alien-glow"></i></div>
                         <span class="text-[9px] md:text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">Sneakers</span>
                     </div>
-                    <div class="snap-center shrink-0 w-24 h-24 md:w-32 md:h-32 glass-card rounded-2xl flex flex-col items-center justify-center gap-2 md:gap-3 p-2 text-center hover:-translate-y-1 transition-transform bg-white/80 dark:bg-white/5 hover:border-alien-glow/50 cursor-pointer border border-white/5">
+                    <div class="snap-center shrink-0 w-24 h-24 md:w-32 md:h-32 glass-card rounded-2xl flex flex-col items-center justify-center gap-2 md:gap-3 p-2 text-center hover:-translate-y-1 transition-transform bg-white/80 dark:bg-white/5 hover:border-alien-glow/50 cursor-pointer border border-white/5 relative z-30">
                         <div class="glass-icon w-8 h-8 md:w-10 md:h-10 rounded-xl flex items-center justify-center"><i data-lucide="palette" class="w-4 h-4 md:w-5 md:h-5 text-alien-glow"></i></div>
                         <span class="text-[9px] md:text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">Art</span>
                     </div>
                 </div>
             </section>
 
-            <section class="max-w-5xl mx-auto px-4 md:px-6 pb-8 md:pb-12">
+            <section class="max-w-5xl mx-auto px-4 md:px-6 pb-8 md:pb-12 relative z-20 pointer-events-auto">
                 <div class="glass-card p-6 md:p-12 rounded-3xl md:rounded-[2.5rem] relative overflow-hidden flex flex-col md:flex-row items-center gap-6 md:gap-10 border-white/10 bg-white/50 dark:bg-white/5 hover:border-alien-glow/30 transition-colors duration-500">
                     <div class="absolute top-0 right-0 w-64 md:w-96 h-64 md:h-96 bg-alien-light/20 dark:bg-alien-glow/20 rounded-full blur-[80px] md:blur-[100px] -z-10 pointer-events-none"></div>
                     <div class="flex-1 text-center md:text-left z-20 pointer-events-auto">
@@ -338,11 +339,12 @@
                         <h2 class="text-2xl md:text-4xl font-extrabold text-slate-900 dark:text-white mb-3 md:mb-4">See a Real Store.</h2>
                         <p class="text-xs md:text-base text-slate-600 dark:text-slate-400 mb-6 md:mb-8 leading-relaxed">Experience exactly what your customers will see. Browse products, add to cart, and test the WhatsApp checkout.</p>
                         
-                        <button onclick="window.open('https://quickmaccstore.whats-cart.com/', '_blank')" class="group inline-flex items-center justify-center gap-2 md:gap-3 bg-slate-900 dark:bg-white text-white dark:text-dark-950 px-6 py-2.5 md:px-8 md:py-3 rounded-xl font-bold transition-all hover:scale-105 w-full md:w-auto shadow-lg text-xs md:text-sm relative z-50 pointer-events-auto">
+                        <!-- Using an <a> tag without target=_blank for native mobile link handling -->
+                        <a href="https://quickmaccstore.whats-cart.com/" class="group inline-flex items-center justify-center gap-2 md:gap-3 bg-slate-900 dark:bg-white text-white dark:text-dark-950 px-6 py-2.5 md:px-8 md:py-3 rounded-xl font-bold transition-all hover:scale-105 w-full md:w-auto shadow-lg text-xs md:text-sm relative z-50 pointer-events-auto cursor-pointer block text-center">
                             <span>Open Demo Store</span><i data-lucide="external-link" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
-                        </button>
+                        </a>
                     </div>
-                    <div class="flex-1 relative w-full max-w-[180px] md:max-w-[220px] group cursor-pointer block z-20 pointer-events-auto" onclick="window.open('https://quickmaccstore.whats-cart.com/', '_blank')">
+                    <a href="https://quickmaccstore.whats-cart.com/" class="flex-1 relative w-full max-w-[180px] md:max-w-[220px] group cursor-pointer block z-30 pointer-events-auto">
                         <div class="absolute inset-0 bg-alien-glow/20 dark:bg-alien-glow/20 blur-xl md:blur-2xl group-hover:bg-alien-glow/40 transition-colors animate-pulse-glow pointer-events-none"></div>
                         <div class="glass-card bg-white/90 dark:bg-black/90 p-1.5 md:p-2 rounded-[1.25rem] md:rounded-[1.5rem] border border-slate-200 dark:border-white/10 transform group-hover:-translate-y-2 transition-transform duration-500 relative z-10 pointer-events-none">
                             <div class="flex items-center gap-1.5 px-2 py-1.5 md:px-3 md:py-2 border-b border-slate-100 dark:border-white/10 mb-1">
@@ -352,15 +354,15 @@
                                 <img src="images/EX1.png" alt="Store Preview" class="w-full h-full object-cover">
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </section>
 
         </div>
 
-        <div id="page-about" class="page-section hidden fade-in px-4 md:px-0">
-            <section class="max-w-4xl mx-auto py-6 md:py-20 px-4 md:px-6">
-                <button onclick="switchTab('home')" class="flex items-center gap-2 text-xs md:text-sm text-alien-deep dark:text-alien-light hover:underline mb-6 md:mb-10 font-bold relative z-20 pointer-events-auto"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
+        <div id="page-about" class="page-section hidden fade-in px-4 md:px-0 relative z-20">
+            <section class="max-w-4xl mx-auto py-6 md:py-20 px-4 md:px-6 pointer-events-auto relative z-20">
+                <button onclick="switchTab('home')" class="flex items-center gap-2 text-xs md:text-sm text-alien-deep dark:text-alien-light hover:underline mb-6 md:mb-10 font-bold relative z-50 pointer-events-auto cursor-pointer"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
                 <div class="text-center mb-10 md:mb-16 relative z-20">
                     <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-2 md:mb-3">About Us</h2>
                     <p class="text-sm md:text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">Bridging the gap between social media scrolling and instant purchasing.</p>
@@ -379,9 +381,9 @@
             </section>
         </div>
 
-        <div id="page-features" class="page-section hidden fade-in px-4 md:px-0">
-            <section class="max-w-6xl mx-auto py-6 md:py-20 px-4 md:px-6">
-                <button onclick="switchTab('home')" class="flex items-center gap-2 text-xs md:text-sm text-alien-deep dark:text-alien-light hover:underline mb-6 md:mb-10 font-bold relative z-20 pointer-events-auto"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
+        <div id="page-features" class="page-section hidden fade-in px-4 md:px-0 relative z-20">
+            <section class="max-w-6xl mx-auto py-6 md:py-20 px-4 md:px-6 pointer-events-auto relative z-20">
+                <button onclick="switchTab('home')" class="flex items-center gap-2 text-xs md:text-sm text-alien-deep dark:text-alien-light hover:underline mb-6 md:mb-10 font-bold relative z-50 pointer-events-auto cursor-pointer"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
                 <div class="text-center mb-10 md:mb-16 relative z-20">
                     <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-2 md:mb-3">Why Switch?</h2>
                     <p class="text-sm md:text-lg text-slate-500 dark:text-slate-400">Old websites are boring. This is the future.</p>
@@ -419,9 +421,9 @@
             </section>
         </div>
 
-        <div id="page-how-it-works" class="page-section hidden fade-in px-4 md:px-0">
-            <section class="max-w-4xl mx-auto py-6 md:py-20 px-4 md:px-6">
-                <button onclick="switchTab('home')" class="flex items-center gap-2 text-xs md:text-sm text-alien-deep dark:text-alien-light hover:underline mb-6 md:mb-10 font-bold relative z-20 pointer-events-auto"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
+        <div id="page-how-it-works" class="page-section hidden fade-in px-4 md:px-0 relative z-20">
+            <section class="max-w-4xl mx-auto py-6 md:py-20 px-4 md:px-6 pointer-events-auto relative z-20">
+                <button onclick="switchTab('home')" class="flex items-center gap-2 text-xs md:text-sm text-alien-deep dark:text-alien-light hover:underline mb-6 md:mb-10 font-bold relative z-50 pointer-events-auto cursor-pointer"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
                 <h2 class="text-2xl sm:text-3xl md:text-5xl font-bold text-slate-900 dark:text-white text-center mb-10 md:mb-16 relative z-20">3 Steps to Launch</h2>
                 <div class="space-y-4 md:space-y-8 relative z-20 pointer-events-auto">
                     <div class="glass-card p-5 md:p-8 rounded-2xl md:rounded-3xl flex items-center gap-4 md:gap-8 group hover:border-alien-light dark:hover:border-alien-glow/30 transition-all">
@@ -441,8 +443,8 @@
         </div>
 
         <div id="page-pricing" class="page-section hidden fade-in px-4 md:px-0 relative z-20">
-            <section class="max-w-2xl mx-auto py-6 md:py-16 px-4 sm:px-6 font-sans relative z-20">
-                <button onclick="switchTab('home')" class="flex items-center gap-2 text-xs md:text-sm text-alien-deep dark:text-alien-light hover:underline mb-6 md:mb-10 font-bold pointer-events-auto"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
+            <section class="max-w-2xl mx-auto py-6 md:py-16 px-4 sm:px-6 font-sans relative z-20 pointer-events-auto">
+                <button onclick="switchTab('home')" class="flex items-center gap-2 text-xs md:text-sm text-alien-deep dark:text-alien-light hover:underline mb-6 md:mb-10 font-bold relative z-50 pointer-events-auto cursor-pointer"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
                 
                 <div class="text-center mb-8 md:mb-10 font-sans pointer-events-none">
                     <h2 class="text-2xl md:text-4xl font-bold text-slate-900 dark:text-white mb-2 md:mb-4">Choose Your Plan</h2>
@@ -450,7 +452,6 @@
                 </div>
 
                 <div class="flex flex-col md:flex-row gap-4 md:gap-6 items-stretch relative z-20 pointer-events-auto">
-                    
                     <div id="student-card" class="flex-1 bg-white/40 dark:bg-white/5 backdrop-blur-lg border border-blue-200 dark:border-blue-500/30 rounded-2xl p-4 md:p-5 shadow-xl flex-col hidden hover:shadow-blue-500/20 transition duration-300 relative z-20">
                         <div class="absolute -top-2 right-4 bg-blue-500 text-white text-[9px] md:text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Student Deal</div>
                         <h3 class="text-base md:text-lg font-semibold tracking-tight text-slate-800 dark:text-white/90 mb-2 md:mb-3">Student</h3>
@@ -460,7 +461,8 @@
                             <div class="flex justify-between border-b border-slate-200 dark:border-white/10 pb-1.5 md:pb-2"><span>Products</span> <span class="font-medium">15 Items</span></div>
                             <div class="flex justify-between border-b border-slate-200 dark:border-white/10 pb-1.5 md:pb-2"><span>Social</span> <span>1 Link</span></div>
                         </div>
-                        <button onclick="selectPlan('Student')" class="w-full mt-4 md:mt-5 py-2 md:py-2.5 rounded-xl bg-blue-500 hover:bg-blue-600 text-white text-xs md:text-sm font-medium transition relative z-50 pointer-events-auto flex items-center justify-center cursor-pointer text-center">Select Student</button>
+                        <!-- NATIVE HTML LINK for Bulletproof Whatsapp deep-linking -->
+                        <a href="https://wa.me/254796600432?text=Hi!%20I%20am%20ready%20to%20launch%20my%20store.%20I%20would%20like%20to%20get%20the%20WhatsCart%20*Student*%20Plan." class="w-full mt-4 md:mt-5 py-2 md:py-2.5 rounded-xl bg-blue-500 hover:bg-blue-600 text-white text-xs md:text-sm font-medium transition relative z-50 pointer-events-auto flex items-center justify-center cursor-pointer text-center block">Select Student</a>
                     </div>
 
                     <div class="flex-1 bg-white/40 dark:bg-white/5 backdrop-blur-lg border border-slate-200 dark:border-white/20 rounded-2xl p-4 md:p-5 shadow-xl transition duration-300 hover:shadow-2xl flex flex-col z-20 relative pointer-events-auto">
@@ -486,10 +488,11 @@
                                 <span class="text-slate-800 dark:text-white flex items-center gap-1.5"><i class="fas fa-check text-green-500 text-xs md:text-sm"></i><span class="font-medium">1 Link</span></span>
                             </div>
                         </div>
-                        <button onclick="selectPlan('Starter')" class="w-full mt-4 md:mt-5 py-2 md:py-2.5 px-3 rounded-xl bg-slate-100 dark:bg-white/10 border border-slate-200 dark:border-white/20 text-slate-700 dark:text-white text-xs md:text-sm font-medium backdrop-blur-sm hover:bg-slate-200 dark:hover:bg-white/20 transition flex items-center justify-center gap-2 group relative z-50 pointer-events-auto cursor-pointer text-center">
+                        <!-- NATIVE HTML LINK for Bulletproof Whatsapp deep-linking -->
+                        <a href="https://wa.me/254796600432?text=Hi!%20I%20am%20ready%20to%20launch%20my%20store.%20I%20would%20like%20to%20get%20the%20WhatsCart%20*Starter*%20Plan." class="w-full mt-4 md:mt-5 py-2 md:py-2.5 px-3 rounded-xl bg-slate-100 dark:bg-white/10 border border-slate-200 dark:border-white/20 text-slate-700 dark:text-white text-xs md:text-sm font-medium backdrop-blur-sm hover:bg-slate-200 dark:hover:bg-white/20 transition flex items-center justify-center gap-2 group relative z-50 pointer-events-auto cursor-pointer text-center block">
                             <span>Select</span>
                             <i class="fas fa-arrow-right text-[10px] md:text-xs opacity-0 group-hover:opacity-100 transition -translate-x-1 group-hover:translate-x-0.5"></i>
-                        </button>
+                        </a>
                     </div>
 
                     <div class="flex-1 bg-white/60 dark:bg-white/5 backdrop-blur-lg border border-red-500/50 dark:border-red-500/40 rounded-2xl p-4 md:p-5 shadow-xl flex flex-col relative pro-glow z-20 pointer-events-auto">
@@ -521,19 +524,20 @@
                                 <span class="text-slate-800 dark:text-white flex items-center gap-1.5"><i class="fas fa-check text-green-500 text-xs md:text-sm"></i><span class="font-medium">All Links</span></span>
                             </div>
                         </div>
-                        <button onclick="selectPlan('Pro')" class="w-full mt-4 md:mt-5 py-2 md:py-2.5 px-3 rounded-xl bg-red-500 text-white dark:bg-red-500/20 dark:border dark:border-red-500/40 text-xs md:text-sm font-bold backdrop-blur-sm hover:bg-red-600 dark:hover:bg-red-500/30 transition flex items-center justify-center gap-2 group shadow-lg shadow-red-500/20 relative z-50 pointer-events-auto cursor-pointer text-center">
+                        <!-- NATIVE HTML LINK for Bulletproof Whatsapp deep-linking -->
+                        <a href="https://wa.me/254796600432?text=Hi!%20I%20am%20ready%20to%20launch%20my%20store.%20I%20would%20like%20to%20get%20the%20WhatsCart%20*Pro*%20Plan." class="w-full mt-4 md:mt-5 py-2 md:py-2.5 px-3 rounded-xl bg-red-500 text-white dark:bg-red-500/20 dark:border dark:border-red-500/40 text-xs md:text-sm font-bold backdrop-blur-sm hover:bg-red-600 dark:hover:bg-red-500/30 transition flex items-center justify-center gap-2 group shadow-lg shadow-red-500/20 relative z-50 pointer-events-auto cursor-pointer text-center block">
                             <span>Claim 30% Off</span>
                             <i class="fas fa-arrow-right text-[10px] md:text-xs text-white group-hover:translate-x-1 transition"></i>
-                        </button>
+                        </a>
                     </div>
                 </div>
 
                 <div class="mt-8 max-w-sm mx-auto relative z-20 pointer-events-auto">
                     <div class="glass-card rounded-xl p-4 border border-slate-200 dark:border-white/10 flex flex-col items-center gap-3">
                         <p class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Student Discount</p>
-                        <div class="flex w-full gap-2">
-                            <input type="text" id="studentCodeInput" placeholder="Enter Code" class="flex-1 bg-transparent border border-slate-300 dark:border-white/20 rounded-lg px-3 py-2 text-xs md:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-alien-glow uppercase text-center placeholder-slate-400">
-                            <button onclick="checkStudentCode()" class="bg-slate-900 dark:bg-white text-white dark:text-black px-4 py-2 rounded-lg text-[10px] md:text-xs font-bold uppercase hover:opacity-90 transition z-50 pointer-events-auto">Apply</button>
+                        <div class="flex w-full gap-2 relative z-50 pointer-events-auto">
+                            <input type="text" id="studentCodeInput" placeholder="Enter Code" class="flex-1 bg-transparent border border-slate-300 dark:border-white/20 rounded-lg px-3 py-2 text-xs md:text-sm text-slate-900 dark:text-white focus:outline-none focus:border-alien-glow uppercase text-center placeholder-slate-400 relative z-50 pointer-events-auto cursor-text">
+                            <button onclick="checkStudentCode()" class="bg-slate-900 dark:bg-white text-white dark:text-black px-4 py-2 rounded-lg text-[10px] md:text-xs font-bold uppercase hover:opacity-90 transition relative z-50 pointer-events-auto cursor-pointer">Apply</button>
                         </div>
                         <p id="codeError" class="text-red-500 text-xs hidden">Invalid Code</p>
                     </div>
@@ -542,8 +546,8 @@
         </div>
 
         <div id="page-faq" class="page-section hidden fade-in px-4 md:px-0 relative z-20">
-            <section class="max-w-3xl mx-auto py-6 md:py-24 px-4 md:px-6 pointer-events-auto">
-                <button onclick="switchTab('home')" class="flex items-center gap-2 text-xs md:text-sm text-alien-deep dark:text-alien-light hover:underline mb-6 md:mb-10 font-bold"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
+            <section class="max-w-3xl mx-auto py-6 md:py-24 px-4 md:px-6 pointer-events-auto relative z-20">
+                <button onclick="switchTab('home')" class="flex items-center gap-2 text-xs md:text-sm text-alien-deep dark:text-alien-light hover:underline mb-6 md:mb-10 font-bold relative z-50 pointer-events-auto cursor-pointer"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
                 
                 <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-slate-900 dark:text-white mb-8 md:mb-12">Frequently Asked Questions</h2>
                 
@@ -572,15 +576,15 @@
         </div>
 
         <div id="page-contact" class="page-section hidden fade-in px-4 md:px-0 relative z-20">
-            <section class="max-w-4xl mx-auto py-4 md:py-32 flex flex-col items-center text-center min-h-[50vh] justify-center px-4 md:px-6 pointer-events-auto">
-                <button onclick="switchTab('home')" class="flex items-center gap-2 text-xs md:text-sm text-alien-deep dark:text-alien-light hover:underline mb-6 md:mb-10 self-center font-bold"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Home</button>
+            <section class="max-w-4xl mx-auto py-4 md:py-32 flex flex-col items-center text-center min-h-[50vh] justify-center px-4 md:px-6 pointer-events-auto relative z-20">
+                <button onclick="switchTab('home')" class="flex items-center gap-2 text-xs md:text-sm text-alien-deep dark:text-alien-light hover:underline mb-6 md:mb-10 self-center font-bold relative z-50 pointer-events-auto cursor-pointer"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Home</button>
                 <div class="glass-card bg-white dark:bg-transparent p-5 md:p-16 rounded-[2rem] md:rounded-[2.5rem] shadow-2xl border border-slate-100 dark:border-alien-glow/20 w-full relative overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-b from-alien-light/30 to-transparent dark:from-alien-glow/10 dark:to-transparent pointer-events-none"></div>
-                    <h2 class="text-3xl sm:text-4xl md:text-6xl font-extrabold text-slate-900 dark:text-white mb-3 md:mb-6 relative z-10">Let's Build It.</h2>
-                    <p class="text-xs md:text-xl text-slate-500 dark:text-slate-400 mb-6 md:mb-10 max-w-md mx-auto relative z-10">Ready to upgrade your business? Chat with us on WhatsApp to begin setup.</p>
-                    <button onclick="openWhatsAppGeneral()" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-alien-glow dark:bg-alien-light text-white dark:text-dark-950 font-bold py-3.5 px-6 md:py-5 md:px-12 rounded-xl text-sm md:text-xl hover:bg-alien-deep dark:hover:bg-white transition-all hover:scale-105 shadow-xl relative z-50 pointer-events-auto cursor-pointer">
+                    <h2 class="text-3xl sm:text-4xl md:text-6xl font-extrabold text-slate-900 dark:text-white mb-3 md:mb-6 relative z-10 pointer-events-none">Let's Build It.</h2>
+                    <p class="text-xs md:text-xl text-slate-500 dark:text-slate-400 mb-6 md:mb-10 max-w-md mx-auto relative z-10 pointer-events-none">Ready to upgrade your business? Chat with us on WhatsApp to begin setup.</p>
+                    <a href="https://wa.me/254796600432" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-alien-glow dark:bg-alien-light text-white dark:text-dark-950 font-bold py-3.5 px-6 md:py-5 md:px-12 rounded-xl text-sm md:text-xl hover:bg-alien-deep dark:hover:bg-white transition-all hover:scale-105 shadow-xl relative z-50 pointer-events-auto cursor-pointer block">
                         <i data-lucide="message-circle" class="w-5 h-5 md:w-6 md:h-6"></i> Open WhatsApp
-                    </button>
+                    </a>
                 </div>
             </section>
         </div>
@@ -591,15 +595,17 @@
         <h2 class="text-xl md:text-3xl font-bold text-slate-900 dark:text-white mb-2 md:mb-3">Not ready to launch?</h2>
         <p class="text-xs md:text-base text-slate-500 dark:text-slate-400 mb-6 md:mb-8 max-w-md mx-auto leading-relaxed">Get our free step-by-step guide sent directly to your WhatsApp on how to build and scale your store.</p>
         <div class="flex justify-center max-w-md mx-auto relative z-30 pointer-events-auto">
-            <button onclick="getGuide()" class="bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold px-6 py-3.5 md:px-8 rounded-xl transition-all hover:scale-105 shadow-lg shadow-green-500/20 flex items-center justify-center gap-2 group w-full sm:w-auto text-xs md:text-base cursor-pointer relative z-50 pointer-events-auto">
+            <!-- NATIVE HTML LINK for Bulletproof Whatsapp deep-linking -->
+            <a href="https://wa.me/254796600432?text=Hi!%20I%20would%20like%20to%20get%20the%20free%20guide%20on%20how%20to%20build%20my%20WhatsCart%20store." class="bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold px-6 py-3.5 md:px-8 rounded-xl transition-all hover:scale-105 shadow-lg shadow-green-500/20 flex items-center justify-center gap-2 group w-full sm:w-auto text-xs md:text-base cursor-pointer relative z-50 pointer-events-auto block">
                 <i class="fab fa-whatsapp text-lg md:text-xl"></i> Send Guide to my WhatsApp
-            </button>
+            </a>
         </div>
     </section>
 
-    <div id="chatbot-wrapper" class="fixed bottom-20 md:bottom-8 right-4 md:right-8 z-50 flex flex-col items-end pointer-events-auto">
+    <!-- pointer-events-none added to wrapper so it doesn't block the screen, auto added to children -->
+    <div id="chatbot-wrapper" class="fixed bottom-20 md:bottom-8 right-4 md:right-8 z-50 flex flex-col items-end pointer-events-none">
         
-        <div id="chat-window" class="chat-hidden w-[280px] md:w-[320px] wa-pattern-light dark:wa-pattern-dark rounded-2xl shadow-2xl mb-4 overflow-hidden flex flex-col origin-bottom-right">
+        <div id="chat-window" class="chat-hidden w-[280px] md:w-[320px] wa-pattern-light dark:wa-pattern-dark rounded-2xl shadow-2xl mb-4 overflow-hidden flex flex-col origin-bottom-right pointer-events-auto">
             <div class="bg-[#008069] dark:bg-[#202c33] p-2 px-3 flex items-center gap-3 text-white">
                 <button onclick="toggleChat()" class="hover:bg-white/20 p-1.5 rounded-full transition -ml-1 z-50 pointer-events-auto cursor-pointer"><i data-lucide="arrow-left" class="w-5 h-5"></i></button>
                 <div class="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center shrink-0 overflow-hidden">
@@ -736,21 +742,6 @@
                 input.classList.add('border-red-500');
                 setTimeout(() => input.classList.remove('border-red-500'), 2000);
             }
-        }
-
-        // --- WHATSAPP REDIRECT LOGIC ---
-        function selectPlan(planName) {
-            const msg = `Hi! I am ready to launch my store. I would like to get the WhatsCart *${planName}* Plan.`;
-            window.location.href = `https://wa.me/254796600432?text=${encodeURIComponent(msg)}`;
-        }
-
-        function getGuide() {
-            const msg = `Hi! I would like to get the free guide on how to build my WhatsCart store.`;
-            window.location.href = `https://wa.me/254796600432?text=${encodeURIComponent(msg)}`;
-        }
-
-        function openWhatsAppGeneral() {
-            window.location.href = `https://wa.me/254796600432`;
         }
 
         // --- WHATSAPP CHATBOT STATE LOGIC ---
@@ -897,6 +888,7 @@
                 capturedBusinessName = text.trim();
                 appendMessage("<i class='fas fa-spinner fa-spin text-alien-glow mr-2'></i>Awesome! Redirecting you to our team...");
                 setTimeout(() => {
+                    // Replaced window.open with location.href to prevent mobile popup blocking
                     window.location.href = `https://wa.me/254796600432?text=Hi!%20I%20want%20to%20set%20up%20WhatsCart%20for%20my%20business:%20${encodeURIComponent(capturedBusinessName)}`;
                 }, 1500);
                 return;
@@ -913,7 +905,7 @@
                 appendMessage("<i class='fas fa-tags text-alien-glow mb-2 text-lg'></i><br>We have two main packages to help you start selling instantly on WhatsApp!<br><br><strong>Starter Package (KSh 5,000):</strong><br>Perfect for getting started. We build your store, host it for 30 days, allow up to 20 products, and let you connect 1 social media link.<br><br><strong>Pro Package (<s class='text-slate-400'>KSh 10,000</s> KSh 7,000 <i class='fas fa-fire text-red-500'></i>):</strong><br><i class='text-red-500 text-xs mb-2 block'>*Flash sale ends soon!</i>For growing brands! You get 40 days of hosting, UNLIMITED products, and unlimited social media links.<br><br><em>Note: Adding your own custom domain is just a one-time yearly fee.</em><br><img src='stickers/sicker (1).jpg' alt='Pricing Sticker' class='w-24 h-24 rounded-lg mt-2 object-cover block shadow-sm border border-black/5'>");
             } 
             else if (lowerText.includes("demo")) {
-                appendMessage("<i class='fas fa-laptop-code text-alien-glow mb-2 text-lg'></i><br>Check out our live demo store!<br><br><strong>QuickMacc Store</strong> is running smoothly on our platform. <br><br><a href='https://quickmaccstore.whats-cart.com/' target='_blank' class='text-[#00a884] dark:text-green-400 hover:underline font-bold'><i class='fas fa-external-link-alt mr-1'></i>Click here to view the Demo</a>");
+                appendMessage("<i class='fas fa-laptop-code text-alien-glow mb-2 text-lg'></i><br>Check out our live demo store!<br><br><strong>QuickMacc Store</strong> is running smoothly on our platform. <br><br><a href='https://quickmaccstore.whats-cart.com/' class='text-[#00a884] dark:text-green-400 hover:underline font-bold'><i class='fas fa-external-link-alt mr-1'></i>Click here to view the Demo</a>");
             } 
             else if (lowerText.includes("about") || lowerText.includes("what do you do") || lowerText.includes("what we do") || lowerText.includes("company")) {
                 appendMessage("<strong><i class='fas fa-bullseye text-alien-glow mr-1'></i> About Us:</strong><br>We bridge the gap between social media and instant purchasing. We turn your WhatsApp into an automated checkout machine! We build aesthetic, mobile-first stores so your customers can shop easily without complex websites, and send formatted orders directly to your WhatsApp.");
@@ -926,7 +918,8 @@
                 appendMessage("<i class='fas fa-graduation-cap text-blue-500 mr-1'></i> We have a special Student Deal!<br><br>Do you have a student discount code? Please type it below (or type 'cancel').");
             } 
             else if (lowerText.includes("start") || lowerText.includes("setup") || lowerText.includes("build") || lowerText.includes("form")) {
-                appendMessage("Awesome! We are ready to build your store. <i class='fas fa-rocket text-alien-glow ml-1'></i><br><br>The fastest way to get started is to fill out our quick onboarding form with your brand details and products.<br><br><a href='https://forms.gle/MJVSmxeTKgsZaTtp6' target='_blank' class='inline-block mt-2 bg-[#22c55e] text-white px-4 py-2 rounded-lg font-bold text-xs shadow-sm hover:opacity-90'><i class='fas fa-clipboard-list mr-1'></i> Open Setup Form</a><br><br>Prefer to do it over chat? Just reply with your <b>Business Name</b> to connect with our human team!");
+                // NEW: Connects to the Google Form
+                appendMessage("Awesome! We are ready to build your store. <i class='fas fa-rocket text-alien-glow ml-1'></i><br><br>The fastest way to get started is to fill out our quick onboarding form with your brand details and products.<br><br><a href='https://forms.gle/MJVSmxeTKgsZaTtp6' class='inline-block mt-2 bg-[#22c55e] text-white px-4 py-2 rounded-lg font-bold text-xs shadow-sm hover:opacity-90'><i class='fas fa-clipboard-list mr-1'></i> Open Setup Form</a><br><br>Prefer to do it over chat? Just reply with your <b>Business Name</b> to connect with our human team!");
             }
             else {
                 chatState = 'waiting_for_business_name';
